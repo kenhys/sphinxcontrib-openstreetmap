@@ -20,7 +20,8 @@ class OpenStreetMapDirective(Directive):
     has_content = False
     option_spec = {
         'id': directives.unchanged,
-        'label': directives.unchanged
+        'label': directives.unchanged,
+        'marker': directives.unchanged,
     }
 
     def run(self):
