@@ -26,6 +26,11 @@ class OpenStreetMapDirective(Directive):
 
     def run(self):
         node = openstreetmap()
+        if 'id' in self.options:
+            node['id'] = self.options['id']
+        else:
+            msg = ('openstreetmap directive needs uniqueue id for map data')
+            return [document.reporter.warning(msg, line=self.lineno)]
         return [node]
 
 def visit_openstreetmap_node(self, node):
