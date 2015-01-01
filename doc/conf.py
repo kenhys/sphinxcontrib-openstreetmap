@@ -43,7 +43,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'OpenStreetMap'
+project = u'Sphinxcontrib-openstreetmap'
 copyright = u'2015, HAYASHI Kentaro'
 
 # The version info for the project you're documenting, acts as replacement for
