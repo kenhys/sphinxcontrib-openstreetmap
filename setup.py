@@ -13,7 +13,7 @@ requires = ['Sphinx>=0.6']
 setup(
     name='sphinxcontrib-openstreetmap',
     version='0.1.0',
-    url='http://bitbucket.org/birkenfeld/sphinx-contrib',
+    url='https://github.com/kenhys/sphinxcontrib-openstreetmap',
     download_url='http://pypi.python.org/pypi/sphinxcontrib-openstreetmap',
     license='BSD',
     author='HAYASHI Kentaro',
