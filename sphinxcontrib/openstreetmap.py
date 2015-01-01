@@ -19,7 +19,7 @@ class OpenStreetMapDirective(Directive):
     """Directive for embedding OpenStreetMap"""
     has_content = False
     option_spec = {
-        'name': directives.unchanged,
+        'id': directives.unchanged,
         'label': directives.unchanged
     }
 
