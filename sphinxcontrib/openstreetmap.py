@@ -8,6 +8,8 @@
 	:copyright: Copyright 2015 HAYASHI Kentaro <kenhys@gmail.com>
 	:license: BSD, see LICENSE for details.
 """
+from docutils import nodes
+from docutils.parsers.rst import directives
 from sphinx.util.compat import Directive
 
 class openstreetmap(nodes.General, nodes.Element):
