@@ -18,7 +18,7 @@ setup(
     license='BSD',
     author='HAYASHI Kentaro',
     author_email='kenhys@gmail.com',
-    description='Sphinx "openstreetmap" extension',
+    description='Sphinx "OpenStreetMap" extension',
     long_description=long_desc,
     zip_safe=False,
     classifiers=[
