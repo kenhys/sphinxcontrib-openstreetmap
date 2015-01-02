@@ -21,7 +21,6 @@ class OpenStreetMapDirective(Directive):
     option_spec = {
         'id': directives.unchanged,
         'label': directives.unchanged,
-        'marker': directives.unchanged,
     }
 
     def run(self):
