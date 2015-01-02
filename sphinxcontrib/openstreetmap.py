@@ -17,7 +17,7 @@ class openstreetmap(nodes.General, nodes.Element):
 
 class OpenStreetMapDirective(Directive):
     """Directive for embedding OpenStreetMap"""
-    has_content = False
+    has_content = True
     option_spec = {
         'id': directives.unchanged,
         'label': directives.unchanged,
@@ -30,6 +30,11 @@ class OpenStreetMapDirective(Directive):
         else:
             msg = ('openstreetmap directive needs uniqueue id for map data')
             return [document.reporter.warning(msg, line=self.lineno)]
+        points = []
+        for line in self.content:
+            point = eval(line)
+            points.append(point)
+        node['marker'] = points
         return [node]
 
 def visit_openstreetmap_node(self, node):
