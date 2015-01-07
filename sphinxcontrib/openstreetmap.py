@@ -13,12 +13,13 @@ from docutils.parsers.rst import directives
 from sphinx.util.compat import Directive
 
 
-class OpenStreetMapRenderer:
+class OpenStreetMapRenderer(object):
     pass
 
 
 class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
-    pass
+    def __init__(self):
+        super(OpenStreetMapRenderer, self).__init__()
 
 
 class openstreetmap(nodes.General, nodes.Element):
