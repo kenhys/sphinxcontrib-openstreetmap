@@ -25,6 +25,21 @@ class OpenStreetMapDirective(Directive):
         'longitude': directives.unchanged,
     }
 
+    def __convert_to_hash(self, line):
+        hash = {}
+        for item in line.split(','):
+            pre, post = item.split(':')
+            key = pre.strip()
+            value = post.strip()
+            if key == "label":
+                hash[key] = value
+            elif key == "longitude" or key == "latitude":
+                hash[key] = eval(value)
+            else:
+                hash[key] = value
+        return hash
+
+
     def run(self):
         node = openstreetmap()
         if 'id' in self.options:
@@ -34,7 +49,7 @@ class OpenStreetMapDirective(Directive):
             return [document.reporter.warning(msg, line=self.lineno)]
         points = []
         for line in self.content:
-            point = eval(line)
+            point = self.__convert_to_hash(line)
             points.append(point)
         node['marker'] = points
         node['view'] = {
