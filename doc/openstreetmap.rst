@@ -13,8 +13,8 @@ Usage
    :longitude: 139.00
    :latitude: 35.40
 
-   {'id': 1, 'label': 'hoge', 'longitude': 139.50, 'latitude': 35.40}
-   {'id': 2, 'label': 'hoge', 'longitude': 139.00, 'latitude': 35.40}
+   label: hoge, longitude: 139.50, latitude: 35.40
+   label: hoge, longitude: 139.00, latitude: 35.40
 
 .. openstreetmap::
    :id: example_openstreetmap2
@@ -22,7 +22,7 @@ Usage
    :longitude: 139.00
    :latitude: 35.40
 
-   {'id': 1, 'label': 'hoge', 'longitude': 139.25, 'latitude': 35.40}
+   label: foo bar, longitude: 139.25, latitude: 35.40
 
 
 Syntax
