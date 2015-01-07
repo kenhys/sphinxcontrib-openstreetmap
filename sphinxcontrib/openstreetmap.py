@@ -152,4 +152,3 @@ def setup(app):
     app.add_node(openstreetmap,
                  html=(visit_openstreetmap_node, depart_openstreetmap_node))
     app.add_directive('openstreetmap', OpenStreetMapDirective)
-
