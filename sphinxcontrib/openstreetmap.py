@@ -12,14 +12,18 @@ from docutils import nodes
 from docutils.parsers.rst import directives
 from sphinx.util.compat import Directive
 
+
 class OpenStreetMapRenderer:
     pass
+
 
 class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
     pass
 
+
 class openstreetmap(nodes.General, nodes.Element):
     pass
+
 
 class OpenStreetMapDirective(Directive):
     """Directive for embedding OpenStreetMap"""
@@ -88,6 +92,7 @@ class OpenStreetMapDirective(Directive):
         print(points)
         return [node]
 
+
 def visit_openstreetmap_node(self, node):
     map_id = node['id']
     markers = node['marker']
@@ -138,8 +143,10 @@ def visit_openstreetmap_node(self, node):
     </div>
     """)
 
+
 def depart_openstreetmap_node(self, node):
     pass
+
 
 def setup(app):
     app.add_node(openstreetmap,
