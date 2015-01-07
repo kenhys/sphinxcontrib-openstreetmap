@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-	sphinxcontrib.openstreetmap
-	===========================
+sphinxcontrib.openstreetmap
+===========================
 
-	Embed OpenStreetMap on your documentation.
+Embed OpenStreetMap on your documentation.
 
-	:copyright: Copyright 2015 HAYASHI Kentaro <kenhys@gmail.com>
-	:license: BSD, see LICENSE for details.
+:copyright: Copyright 2015 HAYASHI Kentaro <kenhys@gmail.com>
+:license: BSD, see LICENSE for details.
 """
 from docutils import nodes
 from docutils.parsers.rst import directives
