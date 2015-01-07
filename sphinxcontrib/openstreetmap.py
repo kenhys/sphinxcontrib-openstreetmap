@@ -21,6 +21,7 @@ class OpenStreetMapDirective(Directive):
     option_spec = {
         'id': directives.unchanged,
         'label': directives.unchanged,
+        'renderer': directives.unchanged,
         'latitude': directives.unchanged,
         'longitude': directives.unchanged,
     }
