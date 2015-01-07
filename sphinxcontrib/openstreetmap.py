@@ -93,6 +93,16 @@ def visit_openstreetmap_node(self, node):
     markers = node['marker']
     longitude = node['view']['longitude']
     latitude = node['view']['latitude']
+
+    renderer = None
+    if node['renderer'] == "leafletjs":
+        renderer = OpenStreetMapLeafletjsRenderer()
+    else:
+        msg = ('renderer: %s is not supported.' % renderer['renderer'])
+        return [document.reporter.warning(msg, line=self.lineno)]
+
+    renderer.render(node)
+
     self.body.append("""
     <link rel='stylesheet' href='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css'/>
     <script src='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js'></script>
