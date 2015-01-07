@@ -61,6 +61,12 @@ class OpenStreetMapDirective(Directive):
         else:
             msg = ('openstreetmap directive needs uniqueue id for map data')
             return [document.reporter.warning(msg, line=self.lineno)]
+
+        if 'renderer' in self.options:
+            node['renderer'] = self.options['renderer']
+        else:
+            node['renderer'] = 'leafletjs'
+
         points = []
         for line in self.content:
             point = self.__convert_to_hash(line)
