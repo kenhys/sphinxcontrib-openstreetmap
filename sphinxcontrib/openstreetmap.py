@@ -72,7 +72,7 @@ class OpenStreetMapDirective(Directive):
             return [document.reporter.warning(msg, line=self.lineno)]
 
         if 'renderer' in self.options:
-            if self.is_valid_renderer(node['renderer']):
+            if self.is_valid_renderer(self.options['renderer']):
                 node['renderer'] = self.options['renderer']
             else:
                 msg = ('renderer: %s is not valid.' % renderer['renderer'])
