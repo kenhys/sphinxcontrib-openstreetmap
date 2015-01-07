@@ -21,6 +21,8 @@ class OpenStreetMapDirective(Directive):
     option_spec = {
         'id': directives.unchanged,
         'label': directives.unchanged,
+        'latitude': directives.unchanged,
+        'longitude': directives.unchanged,
     }
 
     def run(self):
@@ -35,10 +37,52 @@ class OpenStreetMapDirective(Directive):
             point = eval(line)
             points.append(point)
         node['marker'] = points
+        node['view'] = {
+            'longitude': self.options['longitude'],
+            'latitude': self.options['latitude']
+        }
+        print(points)
         return [node]
 
 def visit_openstreetmap_node(self, node):
-    self.body.append("<div id='openstreetmap' style='color:red'>OpenStreetMap directive</div>")
+    map_id = node['id']
+    markers = node['marker']
+    longitude = node['view']['longitude']
+    latitude = node['view']['latitude']
+    self.body.append("""
+    <link rel='stylesheet' href='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css'/>
+    <script src='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js'></script>
+    <div id='%s' style='height: auto !important; height: 100%%; min-height: %s;'>
+    <script type='text/javascript'>
+        var map = L.map('%s').setView([%s, %s], 11);
+        var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                                    attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    """ % (map_id, '400px', map_id, latitude, longitude))
+    self.body.append("""
+    var markers = [
+    """)
+    for marker in markers:
+        self.body.append("""
+        {latitude: %s, longitude: %s},
+        """ % (marker['latitude'], marker['longitude']))
+    self.body.append("""
+    ];
+    """)
+    self.body.append("""
+    for (var i = 0; i < markers.length; i++) {
+      var marker = markers[i];
+      var mapMarker = L.marker([marker['latitude'], marker['longitude']], {title: 'aaaa'});
+      mapMarker.addTo(map);
+      mapMarker.bindPopup('Popup sample');
+      mapMarker.openPopup();
+    }
+    """)
+    self.body.append("""
+        L.control.scale().addTo(map);
+      </script>
+    </div>
+    """)
 
 def depart_openstreetmap_node(self, node):
     pass
