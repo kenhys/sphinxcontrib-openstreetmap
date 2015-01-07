@@ -25,6 +25,9 @@ class OpenStreetMapDirective(Directive):
         'longitude': directives.unchanged,
     }
 
+    def __milliseconds_to_degree(self, value):
+        return value / 3600000
+
     def __convert_to_hash(self, line):
         hash = {}
         for item in line.split(','):
@@ -34,7 +37,11 @@ class OpenStreetMapDirective(Directive):
             if key == "label":
                 hash[key] = value
             elif key == "longitude" or key == "latitude":
-                hash[key] = eval(value)
+                milliseconds = eval(value)
+                if isinstance(milliseconds, float):
+                    hash[key] = milliseconds
+                else:
+                    self.__milliseconds_to_degree(milliseconds)
             else:
                 hash[key] = value
         return hash
