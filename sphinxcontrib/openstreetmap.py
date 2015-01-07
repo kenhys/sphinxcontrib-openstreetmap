@@ -21,6 +21,9 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
     def __init__(self):
         super(OpenStreetMapRenderer, self).__init__()
 
+    def render(self, node):
+        pass
+
 
 class openstreetmap(nodes.General, nodes.Element):
     pass
