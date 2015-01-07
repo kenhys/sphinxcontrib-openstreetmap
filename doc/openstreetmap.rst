@@ -12,6 +12,7 @@ Usage
    :label: Example OpenStreetMap
    :longitude: 139.00
    :latitude: 35.40
+   :renderer: leafletjs
 
    label: hoge, longitude: 139.50, latitude: 35.40
    label: hoge, longitude: 139.00, latitude: 35.40
@@ -21,6 +22,7 @@ Usage
    :label: Example OpenStreetMap
    :longitude: 139.00
    :latitude: 35.40
+   :renderer: leafletjs
 
    label: foo bar, longitude: 139.25, latitude: 35.40
 
