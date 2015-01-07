@@ -12,6 +12,12 @@ from docutils import nodes
 from docutils.parsers.rst import directives
 from sphinx.util.compat import Directive
 
+class OpenStreetMapRenderer:
+    pass
+
+class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
+    pass
+
 class openstreetmap(nodes.General, nodes.Element):
     pass
 
