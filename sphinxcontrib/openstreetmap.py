@@ -57,7 +57,7 @@ class OpenStreetMapDirective(Directive):
                 hash[key] = value
         return hash
 
-    def is_valid_renderer(renderer):
+    def is_valid_renderer(self, renderer):
         if renderer in ['leafletjs']:
             return True
         else:
