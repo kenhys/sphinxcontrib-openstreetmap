@@ -53,6 +53,11 @@ class OpenStreetMapDirective(Directive):
                 hash[key] = value
         return hash
 
+    def is_valid_renderer(renderer):
+        if renderer in ['leafletjs']:
+            return True
+        else:
+            return False
 
     def run(self):
         node = openstreetmap()
@@ -63,7 +68,11 @@ class OpenStreetMapDirective(Directive):
             return [document.reporter.warning(msg, line=self.lineno)]
 
         if 'renderer' in self.options:
-            node['renderer'] = self.options['renderer']
+            if self.is_valid_renderer(node['renderer']):
+                node['renderer'] = self.options['renderer']
+            else:
+                msg = ('renderer: %s is not valid.' % renderer['renderer'])
+                return [document.reporter.warning(msg, line=self.lineno)]
         else:
             node['renderer'] = 'leafletjs'
 
