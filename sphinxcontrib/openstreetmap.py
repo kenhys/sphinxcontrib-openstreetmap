@@ -21,8 +21,33 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
     def __init__(self):
         super(OpenStreetMapRenderer, self).__init__()
 
+    def __header__(self):
+        cdn_url = "http://cdn.leafletjs.com/leaflet-0.7.3"
+
+        body = ""
+        body += "<link ref='stylesheet' href='%s/leaflet.css'/>¥n" % cdn_url
+        body += "<script src='%s/leaflet.js'></script>¥n" % cdn_url
+        base_url = "https://raw.githubusercontent.com"
+        user_content = "%s/Leaflet/Leaflet.label/master/src" % base_url
+        scripts = [
+            "BaseMarkerMethods.js",
+            "CircleMarker.Label.js",
+            "FeatureGroup.Label.js",
+            "Label.js",
+            "Leaflet.label.js",
+            "Map.Label.js",
+            "Marker.Label.js",
+            "Path.Label.js",
+            "copyright.js"
+        ]
+        for js in scripts:
+            body += "<script src='%s/%s'></script>¥n" % (user_content, js)
+        return body
+
     def render(self, node):
-        pass
+        body = ""
+        body += self.__header__()
+        return body
 
 
 class openstreetmap(nodes.General, nodes.Element):
@@ -113,8 +138,6 @@ def visit_openstreetmap_node(self, node):
     renderer.render(node)
 
     self.body.append("""
-    <link rel='stylesheet' href='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css'/>
-    <script src='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js'></script>
     <div id='%s' style='height: auto !important; height: 100%%; min-height: %s;'>
     <script type='text/javascript'>
         var map = L.map('%s').setView([%s, %s], 11);
