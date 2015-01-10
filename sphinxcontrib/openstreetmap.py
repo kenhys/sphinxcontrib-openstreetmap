@@ -51,7 +51,8 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
             "height": "400px",
             "latitude": latitude,
             "longitude": longitude,
-            "zoom": 15
+            "zoom": 15,
+            "osm_link": "<a href='http://openstreetmap.org'>OpenStreetMap</a>"
         }
         body = ""
         body += self.__header__()
@@ -59,7 +60,7 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         <div id='%(map_id)s' style='width: 100%%; height: %(height)s;'>
         <script type='text/javascript'>
         var osm_url = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        var attr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+        var attr = 'Map data &copy; %(osm_link)s contributors';
         var osm = new L.TileLayer(osm_url, {attribution: attr});
         var %(map_id)s = new L.Map('%(map_id)s',
                                    {layers: [osm],
