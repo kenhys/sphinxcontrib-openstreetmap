@@ -22,11 +22,21 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         super(OpenStreetMapRenderer, self).__init__()
 
     def __header__(self):
-        cdn_url = "http://cdn.leafletjs.com/leaflet-0.7.3"
+        cdn_url = "http://cdn.rawgit.com/Leaflet/Leaflet.label/master"
 
-        body = ""
-        body += "<link ref='stylesheet' href='%s/leaflet.css'/>" % cdn_url
-        body += "<script src='%s/leaflet.js'></script>" % cdn_url
+        body = """
+        <link rel="stylesheet" href="%(cdn)s/libs/leaflet/leaflet.css" />
+	<!--[if lte IE 8]><link rel="stylesheet" href="%(cdn)s/libs/leaflet/leaflet.ie.css" /><![endif]-->
+	<link rel="stylesheet" href="%(cdn)s/dist/leaflet.label.css" />
+	<script src="%(cdn)s/libs/leaflet/leaflet-src.js"></script>
+	<script src="%(cdn)s/src/Label.js"></script>
+	<script src="%(cdn)s/src/BaseMarkerMethods.js"></script>
+	<script src="%(cdn)s/src/Marker.Label.js"></script>
+	<script src="%(cdn)s/src/CircleMarker.Label.js"></script>
+	<script src="%(cdn)s/src/Path.Label.js"></script>
+	<script src="%(cdn)s/src/Map.Label.js"></script>
+	<script src="%(cdn)s/src/FeatureGroup.Label.js"></script>
+        """ % {"cdn": cdn_url}
         return body
 
     def render(self, node):
@@ -34,34 +44,41 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         longitude = node['view']['longitude']
         latitude = node['view']['latitude']
 
+        params = {
+            "map_id": map_id,
+            "height": "400px",
+            "latitude": latitude,
+            "longitude": longitude,
+            "zoom": 15
+        }
         body = ""
         body += self.__header__()
-        body += "<div id='%s' style='min-height: %s;'>" % (map_id, '400px')
-        body += "<script type='text/javascript'>"
-
-        body += "var osm_url = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';"
-        body += "var attr = 'Map data &copy; <a href=http://openstreetmap.org>OpenStreetMap</a> contributors';"
-        body += "var %s = new L.map('%s').setView([%s, %s], 13);" % (map_id, map_id, latitude, longitude)
-        body += "var osm = new L.tileLayer(osm_url, {attribution: attr}).addTo(%s);" % map_id
-
+        body += """
+        <div id='%(map_id)s' style='width: 100%%; height: %(height)s;'>
+        <script type='text/javascript'>
+        var osm_url = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        var attr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+        var osm = new L.TileLayer(osm_url, {attribution: attr});
+        var %(map_id)s = new L.Map('%(map_id)s',
+                                   {layers: [osm],
+                                    center: new L.LatLng(%(latitude)s, %(longitude)s),
+                                    zoom: %(zoom)d});
+        """ % params
         markers = node['marker']
+
         body += "var markers = ["
         for marker in markers:
-            body += "{latitude: %s, longitude: %s}," % (marker['latitude'], marker['longitude'])
-
-
+            body += """
+            {label: "%s", latitude: %s, longitude: %s},
+            """ % (marker['label'], marker['latitude'], marker['longitude'])
         body += "];"
         body += """
         for (var i = 0; i < markers.length; i++) {
-        var marker = markers[i];
-        var mapMarker = L.marker([marker['latitude'], marker['longitude']], {title: 'aaaa'});
-        mapMarker.addTo(%s);
-        mapMarker.bindPopup('Popup sample');
-        mapMarker.openPopup();
+          var marker = markers[i];
+          var latlng = [marker['latitude'], marker['longitude']]
+          L.marker(latlng).bindLabel(marker['label'], {noHide: true}).addTo(%s);
         }
         """ % map_id
-        body += "L.control.scale().addTo(%s);" % map_id
-
         body += "</script>"
         body += "</div>"
         print("BODY: %s" % body)
