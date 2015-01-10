@@ -172,7 +172,6 @@ class OpenStreetMapDirective(Directive):
             'longitude': self.options['longitude'],
             'latitude': self.options['latitude']
         }
-        print(points)
         return [node]
 
 
