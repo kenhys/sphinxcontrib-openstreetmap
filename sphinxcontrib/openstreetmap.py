@@ -43,11 +43,13 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
 
     def render(self, node):
         map_id = node['id']
+        label = node['label']
         longitude = node['view']['longitude']
         latitude = node['view']['latitude']
 
         params = {
             "map_id": map_id,
+            "label": label,
             "height": "400px",
             "latitude": latitude,
             "longitude": longitude,
@@ -60,7 +62,7 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         <div id='%(map_id)s' style='width: 100%%; height: %(height)s;'>
         <script type='text/javascript'>
         var osm_url = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        var attr = 'Map data &copy; %(osm_link)s contributors';
+        var attr = "%(label)s | Map data &copy; %(osm_link)s contributors";
         var osm = new L.TileLayer(osm_url, {attribution: attr});
         var latlng = new L.LatLng(%(latitude)s, %(longitude)s);
         var %(map_id)s = new L.Map('%(map_id)s',
@@ -137,6 +139,12 @@ class OpenStreetMapDirective(Directive):
             node['id'] = self.options['id']
         else:
             msg = ('openstreetmap directive needs uniqueue id for map data')
+            return [document.reporter.warning(msg, line=self.lineno)]
+
+        if 'label' in self.options:
+            node['label'] = self.options['label']
+        else:
+            msg = ('openstreetmap directive needs label for map')
             return [document.reporter.warning(msg, line=self.lineno)]
 
         if 'renderer' in self.options:
