@@ -157,11 +157,6 @@ class OpenStreetMapDirective(Directive):
 
 
 def visit_openstreetmap_node(self, node):
-    map_id = node['id']
-    markers = node['marker']
-    longitude = node['view']['longitude']
-    latitude = node['view']['latitude']
-
     renderer = None
     if node['renderer'] == "leafletjs":
         renderer = OpenStreetMapLeafletjsRenderer()
