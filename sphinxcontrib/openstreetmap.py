@@ -26,7 +26,9 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
 
         body = """
         <link rel="stylesheet" href="%(cdn)s/libs/leaflet/leaflet.css" />
-        <!--[if lte IE 8]><link rel="stylesheet" href="%(cdn)s/libs/leaflet/leaflet.ie.css" /><![endif]-->
+        <!--[if lte IE 8]>
+        <link rel="stylesheet" href="%(cdn)s/libs/leaflet/leaflet.ie.css" />
+        <![endif]-->
         <link rel="stylesheet" href="%(cdn)s/dist/leaflet.label.css" />
         <script src="%(cdn)s/libs/leaflet/leaflet-src.js"></script>
         <script src="%(cdn)s/src/Label.js"></script>
