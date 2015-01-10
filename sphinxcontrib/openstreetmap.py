@@ -81,7 +81,6 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         """ % map_id
         body += "</script>"
         body += "</div>"
-        print("BODY: %s" % body)
         return body
 
 
