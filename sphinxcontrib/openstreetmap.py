@@ -171,6 +171,7 @@ def visit_openstreetmap_node(self, node):
 
     self.body.append(renderer.render(node))
 
+
 def depart_openstreetmap_node(self, node):
     pass
 
