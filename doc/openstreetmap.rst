@@ -7,25 +7,26 @@ your documentation easily.
 Usage
 -----
 
+Here is the simple example which shows one marker on the map.
+
 .. openstreetmap::
    :id: example_openstreetmap1
    :label: Example OpenStreetMap
-   :longitude: 139.00
-   :latitude: 35.40
+   :latitude: 40.689249
+   :longitude: -74.0445
    :renderer: leafletjs
 
-   label: hoge, longitude: 139.50, latitude: 35.40
-   label: hoge, longitude: 139.00, latitude: 35.40
+   label: "Liberty Island, New York, United States" latitude: 40.689249 longitude: -74.0445
 
 ..
    .. openstreetmap::
-      :id: example_openstreetmap2
+      :id: example_openstreetmap1
       :label: Example OpenStreetMap
-      :longitude: 139.00
-      :latitude: 35.40
+      :latitude: 40.689249
+      :longitude: -74.0445
       :renderer: leafletjs
 
-      label: foo bar, longitude: 139.25, latitude: 35.40
+      label: "Liberty Island, New York, United States", latitude: 40.689249, longitude: -74.0445
 
 
 Syntax
