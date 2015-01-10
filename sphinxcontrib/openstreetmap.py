@@ -11,7 +11,7 @@ Embed OpenStreetMap on your documentation.
 from docutils import nodes
 from docutils.parsers.rst import directives
 from sphinx.util.compat import Directive
-
+import shlex
 
 class OpenStreetMapRenderer(object):
     pass
@@ -111,20 +111,27 @@ class OpenStreetMapDirective(Directive):
 
     def __convert_to_hash(self, line):
         hash = {}
-        for item in line.split(','):
-            pre, post = item.split(':')
-            key = pre.strip()
-            value = post.strip()
-            if key == "label":
-                hash[key] = value
-            elif key == "longitude" or key == "latitude":
-                milliseconds = eval(value)
-                if isinstance(milliseconds, float):
-                    hash[key] = milliseconds
-                else:
-                    self.__milliseconds_to_degree(milliseconds)
+        items = shlex.split(line)
+        index = 0
+        for item in shlex.split(line):
+            if index % 2 == 0:
+                key = item.replace(":", "")
             else:
-                hash[key] = value
+                if item.endswith(","):
+                    value = item[0:-1]
+                else:
+                    value = item
+                if key == "label":
+                    hash[key] = value
+                elif key == "longitude" or key == "latitude":
+                    milliseconds = eval(value)
+                    if isinstance(milliseconds, float):
+                        hash[key] = milliseconds
+                    else:
+                        self.__milliseconds_to_degree(milliseconds)
+                else:
+                    hash[key] = value
+            index = index + 1
         return hash
 
     def is_valid_renderer(self, renderer):
