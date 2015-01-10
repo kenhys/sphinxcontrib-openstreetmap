@@ -35,9 +35,15 @@ Syntax
 Here is the syntax of openstreetmap::
 
     .. openstreetmap:
-       :id: UNIQUEUE_ID_FOR_OPENSTREETMAP
-       :label: LABEL_FOR_OPENSTREETMAP
-       :marker: {'longitude': 1111, 'latitude': 2222}
+       :id: UNIQUEUE_ID_FOR_DIV_TAG
+       :label: LABEL_FOR_MAP
+       :latitude: LATITUDE
+       :longitude: LONGITUDE
+       :renderer: leafletjs
+
+       MARKER_1_LATITUDE_AND_LONGITUDE
+       ...
+       MARKER_N_LATITUDE_AND_LONGITUDE
 
 Required parameters
 ~~~~~~~~~~~~~~~~~~~
