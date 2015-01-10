@@ -29,13 +29,13 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         <!--[if lte IE 8]><link rel="stylesheet" href="%(cdn)s/libs/leaflet/leaflet.ie.css" /><![endif]-->
         <link rel="stylesheet" href="%(cdn)s/dist/leaflet.label.css" />
         <script src="%(cdn)s/libs/leaflet/leaflet-src.js"></script>
-	<script src="%(cdn)s/src/Label.js"></script>
-	<script src="%(cdn)s/src/BaseMarkerMethods.js"></script>
-	<script src="%(cdn)s/src/Marker.Label.js"></script>
-	<script src="%(cdn)s/src/CircleMarker.Label.js"></script>
-	<script src="%(cdn)s/src/Path.Label.js"></script>
-	<script src="%(cdn)s/src/Map.Label.js"></script>
-	<script src="%(cdn)s/src/FeatureGroup.Label.js"></script>
+        <script src="%(cdn)s/src/Label.js"></script>
+        <script src="%(cdn)s/src/BaseMarkerMethods.js"></script>
+        <script src="%(cdn)s/src/Marker.Label.js"></script>
+        <script src="%(cdn)s/src/CircleMarker.Label.js"></script>
+        <script src="%(cdn)s/src/Path.Label.js"></script>
+        <script src="%(cdn)s/src/Map.Label.js"></script>
+        <script src="%(cdn)s/src/FeatureGroup.Label.js"></script>
         """ % {"cdn": cdn_url}
         return body
 
