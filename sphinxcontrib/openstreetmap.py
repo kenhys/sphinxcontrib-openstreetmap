@@ -79,8 +79,9 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         body += """
         for (var i = 0; i < markers.length; i++) {
           var marker = markers[i];
-          var latlng = [marker['latitude'], marker['longitude']]
-          L.marker(latlng).bindLabel(marker['label'], {noHide: true}).addTo(%s);
+          var latlng = [marker['latitude'], marker['longitude']];
+          var label = marker['label'];
+          L.marker(latlng).bindLabel(label, {noHide: true}).addTo(%s);
         }
         """ % map_id
         body += "</script>"
