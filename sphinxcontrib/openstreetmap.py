@@ -62,9 +62,10 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         var osm_url = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
         var attr = 'Map data &copy; %(osm_link)s contributors';
         var osm = new L.TileLayer(osm_url, {attribution: attr});
+        var latlng = new L.LatLng(%(latitude)s, %(longitude)s);
         var %(map_id)s = new L.Map('%(map_id)s',
                                    {layers: [osm],
-                                    center: new L.LatLng(%(latitude)s, %(longitude)s),
+                                    center: latlng,
                                     zoom: %(zoom)d});
         """ % params
         markers = node['marker']
