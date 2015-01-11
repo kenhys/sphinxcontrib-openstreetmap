@@ -21,6 +21,10 @@ Here are some examples how to use ``openstreetmap`` directive.
      - It just shows simple map only.
    * - `Multiple markers <examples/multiple_markers.html>`_
      - It shows multiple markers on map.
+   * - `No label <examples/no_label.html>`_
+     - It shows usage of label.
+   * - `No renderer <examples/no_renderer.html>`_
+     - It shows usage of ``:renderer:`` option.
 
 License
 =======
