@@ -128,7 +128,7 @@ class OpenStreetMapDirective(Directive):
     def __is_label_text(self, text, index):
         if index != 0:
             return False
-        if text in ["longitude:", "latitude:", "label:"]:
+        if text in ["location:", "label:"]:
             return False
         else:
             return True
