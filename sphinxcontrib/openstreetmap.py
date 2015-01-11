@@ -44,12 +44,15 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
 
     def generate_rectangle_script(self, map_id, data):
         body = "L.multiPolygon(["
+        label = ""
         for rect in data:
             body += "["
+            label = rect['label']
             for pair in rect['rectangle']:
                 body += "[%s, %s]," % (pair[0], pair[1])
             body += "]"
-        body += "]).bindLabel('dummy').addTo(%s);" % map_id
+        body += """
+        ]).bindLabel("%s").addTo(%s);""" % (label, map_id)
         return body
 
     def render(self, node):
