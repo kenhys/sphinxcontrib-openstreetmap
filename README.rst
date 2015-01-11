@@ -28,7 +28,7 @@ This markup generates following map.
    :location: 40.689249,-74.0445
    :renderer: leafletjs
 
-   label: "Liberty Island, New York, United States" location: 40.689249, -74.0445
+   "Liberty Island, New York, United States" location: 40.689249, -74.0445
 
 
 
