@@ -170,6 +170,12 @@ class OpenStreetMapDirective(Directive):
         else:
             return True
 
+    def is_latitude_x_longitude(self, text):
+        if text.find("x") > 0:
+            return True
+        else:
+            return False
+
     def parse_latlng(self, text):
         value = eval(text)
         if self.is_milliseconds(value):
