@@ -183,7 +183,7 @@ class OpenStreetMapDirective(Directive):
             msg = ('openstreetmap directive needs label for map')
             return [document.reporter.warning(msg, line=self.lineno)]
         else:
-            node['label'] = self.arguments[0]
+            node['label'] = "".join(self.arguments)
 
         if 'renderer' in self.options:
             if self.is_valid_renderer(self.options['renderer']):
