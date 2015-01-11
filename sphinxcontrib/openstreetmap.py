@@ -111,13 +111,25 @@ class OpenStreetMapDirective(Directive):
     def __milliseconds_to_degree(self, value):
         return value / 3600000
 
+    def __is_label_text(self, text, index):
+        if index != 0:
+            return False
+        if text in ["longitude:", "latitude:", "label:"]:
+            return False
+        else:
+            return True
+
     def __convert_to_hash(self, line):
         hash = {}
         items = shlex.split(line)
         index = 0
         for item in shlex.split(line):
             if index % 2 == 0:
-                key = item.replace(":", "")
+                if self.__is_label_text(item, index):
+                    key = "label"
+                    value = item
+                else:
+                    key = item.replace(":", "")
             else:
                 if item.endswith(","):
                     value = item[0:-1]
