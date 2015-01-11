@@ -86,11 +86,11 @@ Specify the label for OpenStreetMap data. This label is shown in right bottom of
 `MARKER_X_LATITUDE_AND_LONGITUDE` must be following syntax::
 
 
-    label: LABEL_TEXT, latitude: LATITUDE, longitude: LONGITUDE
+    LABEL_TEXT, latitude: LATITUDE, longitude: LONGITUDE
 
 Here is the simple example of marker::
 
-    label: "Liberty Island, New York, United States", latitude: 40.689249, longitude: -74.0445
+    "Liberty Island, New York, United States", latitude: 40.689249, longitude: -74.0445
 
 
 
