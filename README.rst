@@ -19,7 +19,7 @@ Here is the simple example which shows one marker on the map.
       :location: 40.689249,-74.0445
       :renderer: leafletjs
 
-      label: "Liberty Island, New York, United States", latitude: 40.689249, longitude: -74.0445
+      label: "Liberty Island, New York, United States", location: 40.689249, -74.0445
 
 This markup generates following map.
 
@@ -28,7 +28,7 @@ This markup generates following map.
    :location: 40.689249,-74.0445
    :renderer: leafletjs
 
-   label: "Liberty Island, New York, United States" latitude: 40.689249 longitude: -74.0445
+   label: "Liberty Island, New York, United States" location: 40.689249, -74.0445
 
 
 
