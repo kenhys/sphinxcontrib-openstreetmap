@@ -13,6 +13,7 @@ from docutils.parsers.rst import directives
 from sphinx.util.compat import Directive
 import shlex
 
+
 class OpenStreetMapRenderer(object):
     pass
 
