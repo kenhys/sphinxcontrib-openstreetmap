@@ -179,11 +179,11 @@ class OpenStreetMapDirective(Directive):
             msg = ('openstreetmap directive needs uniqueue id for map data')
             return [document.reporter.warning(msg, line=self.lineno)]
 
-        if 'label' in self.options:
-            node['label'] = self.options['label']
-        else:
+        if self.arguments == []:
             msg = ('openstreetmap directive needs label for map')
             return [document.reporter.warning(msg, line=self.lineno)]
+        else:
+            node['label'] = self.arguments[0]
 
         if 'renderer' in self.options:
             if self.is_valid_renderer(self.options['renderer']):
