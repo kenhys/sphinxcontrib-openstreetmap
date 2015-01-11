@@ -164,10 +164,35 @@ class OpenStreetMapDirective(Directive):
             index = index + 1
         return hash
 
+    def is_milliseconds(self, value):
+        if isinstance(value, float):
+            return False
+        else:
+            return True
+
+    def parse_latlng(self, text):
+        value = eval(text)
+        if self.is_milliseconds(value):
+            latlng = self.__milliseconds_to_degree(value)
+        else:
+            latlng = eval(text)
+        return latlng
+
     def parse_location(self, location):
         latitude = None
         longitude = None
-        return [latitude,longitude]
+
+        if location.find(',') > 0:
+            lat, lng = location.split(',')
+        elif location.find('x') > 0:
+            lat, lng = location.split('x')
+        else:
+            raise ValueError("invalid location: %s" % location)
+
+        latitude = self.parse_latlng(lat)
+        longitude = self.parse_latlng(lng)
+
+        return [latitude, longitude]
 
     def is_valid_renderer(self, renderer):
         if renderer in ['leafletjs']:
@@ -211,6 +236,7 @@ class OpenStreetMapDirective(Directive):
             points.append(point)
         node['marker'] = points
 
+        node['location'] = [None,None]
         if 'location' in self.options:
             try:
                 node['location'] = self.parse_location(self.options['location'])
