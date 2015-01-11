@@ -104,7 +104,6 @@ class OpenStreetMapDirective(Directive):
     optional_arguments = 32
     option_spec = {
         'id': directives.unchanged,
-        'label': directives.unchanged,
         'renderer': directives.unchanged,
         'latitude': directives.unchanged,
         'longitude': directives.unchanged,
