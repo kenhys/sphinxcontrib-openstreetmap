@@ -212,7 +212,13 @@ class OpenStreetMapDirective(Directive):
         node['marker'] = points
 
         if 'location' in self.options:
-            node['location'] = self.parse_location(self.options['location'])
+            try:
+                node['location'] = self.parse_location(self.options['location'])
+            except ValueError:
+                msg = ('location value is invalid: %s'
+                       'Use LATITUDE,LONGITUDE or LATITUDExLONGITUDE format'
+                       % self.options['location'])
+                return [document.reporter.error(msg, line=self.lineno)]
         else:
             msg = ("location isn't specified for openstreetmap directive")
             return [document.reporter.warning(msg, line=self.lineno)]
