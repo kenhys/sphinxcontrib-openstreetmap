@@ -25,6 +25,10 @@ Here are some examples how to use ``openstreetmap`` directive.
      - It shows usage of ``:renderer:`` option.
    * - `Multiple markers <examples/multiple_markers.html>`_
      - It shows multiple markers on map.
+   * - `Location for map <examples/location_map.html>`_
+     - It shows usage of ``location:`` for map.
+   * - `Location for marker <examples/location_marker.html>`_
+     - It shows usage of ``location:`` for marker.
 
 License
 =======
