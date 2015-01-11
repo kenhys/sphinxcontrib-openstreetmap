@@ -149,17 +149,25 @@ class OpenStreetMapDirective(Directive):
                 elif item == "location:":
                     if index + 1 < len(items):
                         if self.is_latitude_x_longitude(items[index + 1]):
-                            print(items[index + 1].split("x"))
-                            exit()
-                        else:
-                            latitude = eval(items[index + 1][0:-1])
-                            longitude = eval(items[index + 2])
+                            lat, lng = items[index + 1].split("x")
+                            latitude = eval(lat)
+                            longitude = eval(lng)
                             hash["location"] = [latitude, longitude]
-                            index = index + 3
-                            if self.key_is_even:
-                                self.key_is_even = False
+                        else:
+                            if items[index + 1].endswith(","):
+                                latitude = eval(items[index + 1][0:-1])
+                                longitude = eval(items[index + 2])
+                                index = index + 3
+                                if self.key_is_even:
+                                    self.key_is_even = False
+                                else:
+                                    self.key_is_even = True
                             else:
-                                self.key_is_even = True
+                                lat, lng = items[index + 1].split(",")
+                                latitude = eval(lat)
+                                longitude = eval(lng)
+                                index = index + 2
+                            hash["location"] = [latitude, longitude]
                             continue
                     else:
                         raise ValueError("location value is invalid: %s" % items[index + 1])
