@@ -17,14 +17,14 @@ Here are some examples how to use ``openstreetmap`` directive.
 
    * - Example
      - Description
-   * - `No marker <examples/no_marker.html>`_
-     - It just shows simple map only.
-   * - `Multiple markers <examples/multiple_markers.html>`_
-     - It shows multiple markers on map.
    * - `No label <examples/no_label.html>`_
      - It shows usage of label.
+   * - `No marker <examples/no_marker.html>`_
+     - It just shows simple map only.
    * - `No renderer <examples/no_renderer.html>`_
      - It shows usage of ``:renderer:`` option.
+   * - `Multiple markers <examples/multiple_markers.html>`_
+     - It shows multiple markers on map.
 
 License
 =======
