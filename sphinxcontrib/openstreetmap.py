@@ -136,7 +136,6 @@ class OpenStreetMapDirective(Directive):
 
     def __convert_to_hash(self, line):
         hash = {}
-        items = shlex.split(line)
         index = 0
         key = ""
         value = ""
