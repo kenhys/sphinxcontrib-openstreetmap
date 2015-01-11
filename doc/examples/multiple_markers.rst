@@ -2,9 +2,8 @@
 Multiple markers example
 ------------------------
 
-.. openstreetmap::
+.. openstreetmap:: Example OpenStreetMap
    :id: example_openstreetmap1
-   :label: Example OpenStreetMap
    :latitude: 40.790278
    :longitude: -73.959722
    :renderer: leafletjs

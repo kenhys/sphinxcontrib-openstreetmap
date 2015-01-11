@@ -14,9 +14,8 @@ Here is the simple example which shows one marker on the map.
 
 ::
 
-   .. openstreetmap::
+   .. openstreetmap:: Example OpenStreetMap
       :id: example_openstreetmap1
-      :label: Example OpenStreetMap
       :latitude: 40.689249
       :longitude: -74.0445
       :renderer: leafletjs
@@ -25,9 +24,8 @@ Here is the simple example which shows one marker on the map.
 
 This markup generates following map.
 
-.. openstreetmap::
+.. openstreetmap:: Example OpenStreetMap
    :id: example_openstreetmap1
-   :label: Example OpenStreetMap
    :latitude: 40.689249
    :longitude: -74.0445
    :renderer: leafletjs
@@ -41,9 +39,8 @@ Syntax
 
 Here is the syntax of openstreetmap::
 
-    .. openstreetmap:
+    .. openstreetmap:: LABEL_FOR_MAP
        :id: UNIQUEUE_ID_FOR_DIV_TAG
-       :label: LABEL_FOR_MAP
        :latitude: LATITUDE
        :longitude: LONGITUDE
        :renderer: leafletjs
@@ -59,11 +56,6 @@ Required parameters
 ````
 
 Specify unique id for OpenStreetMap data. This `id` is used for id of `div` tag in HTML.
-
-`label`
-```````
-
-Specify the label for OpenStreetMap data. This `label` is shown in right bottom of OpenStreetMap.
 
 `latitude`
 ``````````
@@ -82,6 +74,11 @@ Specify the renderer. Currently `reafletjs` is supported.
 
 Optional parameters
 ~~~~~~~~~~~~~~~~~~~
+
+`LABEL_FOR_MAP`
+```````````````
+
+Specify the label for OpenStreetMap data. This label is shown in right bottom of OpenStreetMap.
 
 `MARKER_X_LATITUDE_AND_LONGITUDE`
 `````````````````````````````````
