@@ -136,11 +136,14 @@ class OpenStreetMapDirective(Directive):
         hash = {}
         items = shlex.split(line)
         index = 0
+        key = ""
+        value = ""
+        self.key_is_even = True
         for item in shlex.split(line):
             if self.__is_key_index(index):
                 if self.__is_label_text(item, index):
-                    key = "label"
-                    value = item
+                    hash["label"] = item
+                    self.key_is_even = False
                 else:
                     key = item.replace(":", "")
             else:
