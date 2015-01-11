@@ -148,11 +148,13 @@ class OpenStreetMapDirective(Directive):
                     self.key_is_even = False
                 elif item == "location:":
                     if index + 1 < len(items):
+                        latitude = None
+                        longitude = None
                         if self.is_latitude_x_longitude(items[index + 1]):
                             lat, lng = items[index + 1].split("x")
-                            latitude = eval(lat)
-                            longitude = eval(lng)
-                            hash["location"] = [latitude, longitude]
+                            latitude = self.parse_latlng(lat)
+                            longitude = self.parse_latlng(lng)
+                            index = index + 2
                         else:
                             if items[index + 1].endswith(","):
                                 latitude = eval(items[index + 1][0:-1])
@@ -167,8 +169,8 @@ class OpenStreetMapDirective(Directive):
                                 latitude = eval(lat)
                                 longitude = eval(lng)
                                 index = index + 2
-                            hash["location"] = [latitude, longitude]
-                            continue
+                        hash["location"] = [latitude, longitude]
+                        continue
                     else:
                         raise ValueError("location value is invalid: %s" % items[index + 1])
             else:
@@ -187,6 +189,7 @@ class OpenStreetMapDirective(Directive):
                 else:
                     hash[key] = value
             index = index + 1
+        print(hash)
         return hash
 
     def is_milliseconds(self, value):
