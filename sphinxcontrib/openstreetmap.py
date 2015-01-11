@@ -181,7 +181,7 @@ class OpenStreetMapDirective(Directive):
             return [document.reporter.warning(msg, line=self.lineno)]
 
         if self.arguments == []:
-            msg = ('openstreetmap directive needs label for map')
+            msg = ("label isn't specified for openstreetmap directive")
             document.reporter.warning(msg, line=self.lineno)
             node['label'] = "Example"
         else:
