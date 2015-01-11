@@ -106,8 +106,7 @@ class OpenStreetMapDirective(Directive):
     option_spec = {
         'id': directives.unchanged,
         'renderer': directives.unchanged,
-        'latitude': directives.unchanged,
-        'longitude': directives.unchanged,
+        'location': directives.unchanged,
         'zoom': directives.unchanged,
     }
 
@@ -206,10 +205,13 @@ class OpenStreetMapDirective(Directive):
             point = self.__convert_to_hash(line)
             points.append(point)
         node['marker'] = points
-        node['view'] = {
-            'longitude': self.options['longitude'],
-            'latitude': self.options['latitude']
-        }
+
+        if 'location' in self.options:
+            node['location'] = self.options['location']
+        else:
+            msg = ("location isn't specified for openstreetmap directive")
+            return [document.reporter.warning(msg, line=self.lineno)]
+
         return [node]
 
 
