@@ -16,8 +16,7 @@ Here is the simple example which shows one marker on the map.
 
    .. openstreetmap:: Example OpenStreetMap
       :id: example_openstreetmap1
-      :latitude: 40.689249
-      :longitude: -74.0445
+      :location: 40.689249,-74.0445
       :renderer: leafletjs
 
       label: "Liberty Island, New York, United States", latitude: 40.689249, longitude: -74.0445
@@ -26,8 +25,7 @@ This markup generates following map.
 
 .. openstreetmap:: Example OpenStreetMap
    :id: example_openstreetmap1
-   :latitude: 40.689249
-   :longitude: -74.0445
+   :location: 40.689249,-74.0445
    :renderer: leafletjs
 
    label: "Liberty Island, New York, United States" latitude: 40.689249 longitude: -74.0445
@@ -41,8 +39,7 @@ Here is the syntax of openstreetmap::
 
     .. openstreetmap:: LABEL_FOR_MAP
        :id: UNIQUEUE_ID_FOR_DIV_TAG
-       :latitude: LATITUDE
-       :longitude: LONGITUDE
+       :location: LATITUDE_AND_LONGITUDE
 
        MARKER_1_LATITUDE_AND_LONGITUDE
        ...
@@ -56,15 +53,10 @@ Required parameters
 
 Specify unique id for OpenStreetMap data. This `id` is used for id of `div` tag in HTML.
 
-`latitude`
+`location`
 ``````````
 
-Specify the latitude of center point in OpenStreetMap.
-
-`longitude`
-```````````
-
-Specify the longitude of center point in OpenStreetMap.
+Specify the latitude and the longitude of center point in OpenStreetMap.
 
 Optional parameters
 ~~~~~~~~~~~~~~~~~~~
