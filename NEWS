@@ -8,6 +8,7 @@ NEWS
 * Add examples.
 * Support to omit ``label:`` in context.
 * Drop :label: option. This is incompatible change. Specify label as arguments.
+* Drop latitude:,longitude:. Use location: in context instead.
 
 0.1.0 (2015-01-11)
 ------------------
