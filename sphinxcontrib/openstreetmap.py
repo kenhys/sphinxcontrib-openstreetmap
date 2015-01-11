@@ -111,7 +111,7 @@ class OpenStreetMapDirective(Directive):
     }
 
     def __milliseconds_to_degree(self, value):
-        return value / 3600000
+        return value / 3600000.0
 
     def __is_key_index(self, index):
         mod = 0
