@@ -148,17 +148,15 @@ class OpenStreetMapDirective(Directive):
                     self.key_is_even = False
                 elif item == "location:":
                     if index + 1 < len(items):
-                        latitude = None
-                        longitude = None
+                        lat = latitude = None
+                        lng = longitude = None
                         if self.is_latitude_x_longitude(items[index + 1]):
                             lat, lng = items[index + 1].split("x")
-                            latitude = self.parse_latlng(lat)
-                            longitude = self.parse_latlng(lng)
                             index = index + 2
                         else:
                             if items[index + 1].endswith(","):
-                                latitude = eval(items[index + 1][0:-1])
-                                longitude = eval(items[index + 2])
+                                lat = items[index + 1][0:-1]
+                                lng = items[index + 2]
                                 index = index + 3
                                 if self.key_is_even:
                                     self.key_is_even = False
@@ -166,9 +164,9 @@ class OpenStreetMapDirective(Directive):
                                     self.key_is_even = True
                             else:
                                 lat, lng = items[index + 1].split(",")
-                                latitude = self.parse_latlng(lat)
-                                longitude = self.parse_latlng(lng)
                                 index = index + 2
+                        latitude = self.parse_latlng(lat)
+                        longitude = self.parse_latlng(lng)
                         hash["location"] = [latitude, longitude]
                         continue
                     else:
