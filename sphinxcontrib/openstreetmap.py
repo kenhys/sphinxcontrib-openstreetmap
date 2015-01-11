@@ -171,21 +171,14 @@ class OpenStreetMapDirective(Directive):
                         continue
                     else:
                         raise ValueError("location value is invalid: %s" % items[index + 1])
+                else:
+                    key = item[0:-1]
             else:
                 if item.endswith(","):
                     value = item[0:-1]
                 else:
                     value = item
-                if key == "label":
-                    hash[key] = value
-                elif key == "longitude" or key == "latitude":
-                    milliseconds = eval(value)
-                    if isinstance(milliseconds, float):
-                        hash[key] = milliseconds
-                    else:
-                        self.__milliseconds_to_degree(milliseconds)
-                else:
-                    hash[key] = value
+                hash[key] = value
             index = index + 1
         return hash
 
