@@ -139,13 +139,24 @@ class OpenStreetMapDirective(Directive):
         key = ""
         value = ""
         self.key_is_even = True
-        for item in shlex.split(line):
+        items = shlex.split(line)
+        while index < len(items):
+            item = items[index]
             if self.__is_key_index(index):
                 if self.__is_label_text(item, index):
                     hash["label"] = item
                     self.key_is_even = False
-                else:
-                    key = item.replace(":", "")
+                elif item == "location:":
+                    if index + 1 < len(items):
+                        if self.is_latitude_x_longitude(items[index + 1]):
+                            print(items[index + 1].split("x"))
+                            exit()
+                        else:
+                            latitude = eval(items[index + 1][0:-1])
+                            longitude = eval(items[index + 2])
+                            hash["location"] = [latitude, longitude]
+                    else:
+                        raise ValueError("location value is invalid: %s" % items[index + 1])
             else:
                 if item.endswith(","):
                     value = item[0:-1]
