@@ -114,7 +114,7 @@ class OpenStreetMapDirective(Directive):
 
     def __is_key_index(self, index):
         mod = 0
-        if key_is_even:
+        if self.key_is_even:
             mod = 0
         else:
             mod = 1
