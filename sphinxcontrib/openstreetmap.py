@@ -155,6 +155,12 @@ class OpenStreetMapDirective(Directive):
                             latitude = eval(items[index + 1][0:-1])
                             longitude = eval(items[index + 2])
                             hash["location"] = [latitude, longitude]
+                            index = index + 3
+                            if self.key_is_even:
+                                self.key_is_even = False
+                            else:
+                                self.key_is_even = True
+                            continue
                     else:
                         raise ValueError("location value is invalid: %s" % items[index + 1])
             else:
