@@ -12,6 +12,19 @@ Usage
 
 Here is the simple example which shows one marker on the map.
 
+::
+
+   .. openstreetmap::
+      :id: example_openstreetmap1
+      :label: Example OpenStreetMap
+      :latitude: 40.689249
+      :longitude: -74.0445
+      :renderer: leafletjs
+
+      label: "Liberty Island, New York, United States", latitude: 40.689249, longitude: -74.0445
+
+This markup generates following map.
+
 .. openstreetmap::
    :id: example_openstreetmap1
    :label: Example OpenStreetMap
@@ -21,15 +34,6 @@ Here is the simple example which shows one marker on the map.
 
    label: "Liberty Island, New York, United States" latitude: 40.689249 longitude: -74.0445
 
-..
-   .. openstreetmap::
-      :id: example_openstreetmap1
-      :label: Example OpenStreetMap
-      :latitude: 40.689249
-      :longitude: -74.0445
-      :renderer: leafletjs
-
-      label: "Liberty Island, New York, United States", latitude: 40.689249, longitude: -74.0445
 
 
 Syntax
