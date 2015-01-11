@@ -29,6 +29,8 @@ Here are some examples how to use ``openstreetmap`` directive.
      - It shows usage of ``location:`` for map.
    * - `Location for marker <examples/location_marker.html>`_
      - It shows usage of ``location:`` for marker.
+   * - `Rectangle <examples/rectangle.html>`_
+     - It shows usage of ``rectangle:``.
 
 License
 =======
