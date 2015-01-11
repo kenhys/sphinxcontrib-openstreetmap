@@ -99,6 +99,7 @@ class openstreetmap(nodes.General, nodes.Element):
 class OpenStreetMapDirective(Directive):
     """Directive for embedding OpenStreetMap"""
     has_content = True
+    key_is_even = True
     option_spec = {
         'id': directives.unchanged,
         'label': directives.unchanged,
@@ -110,6 +111,18 @@ class OpenStreetMapDirective(Directive):
 
     def __milliseconds_to_degree(self, value):
         return value / 3600000
+
+    def __is_key_index(self, index):
+        mod = 0
+        if key_is_even:
+            mod = 0
+        else:
+            mod = 1
+
+        if index % 2 == mod:
+            return True
+        else:
+            return False
 
     def __is_label_text(self, text, index):
         if index != 0:
@@ -124,7 +137,7 @@ class OpenStreetMapDirective(Directive):
         items = shlex.split(line)
         index = 0
         for item in shlex.split(line):
-            if index % 2 == 0:
+            if self.__is_key_index(index):
                 if self.__is_label_text(item, index):
                     key = "label"
                     value = item
