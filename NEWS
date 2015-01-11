@@ -1,6 +1,14 @@
 NEWS
 ====
 
+0.2.0 (2015-01-11)
+------------------
+
+* Support ``zoom`` option.
+* Add examples.
+* Support to omit ``label:`` in context.
+* Drop :label: option. This is incompatible change. Specify label as arguments.
+
 0.1.0 (2015-01-11)
 ------------------
 
