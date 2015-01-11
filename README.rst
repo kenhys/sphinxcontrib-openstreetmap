@@ -77,11 +77,11 @@ Specify the renderer. Currently `reafletjs` is supported.
 `MARKER_X_LATITUDE_AND_LONGITUDE` must be following syntax::
 
 
-    LABEL_TEXT, latitude: LATITUDE, longitude: LONGITUDE
+    LABEL_TEXT, location: LATITUDE, LONGITUDE
 
 Here is the simple example of marker::
 
-    "Liberty Island, New York, United States", latitude: 40.689249, longitude: -74.0445
+    "Liberty Island, New York, United States", location: 40.689249, -74.0445
 
 
 
