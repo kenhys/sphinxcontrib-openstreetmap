@@ -11,8 +11,7 @@ Embed OpenStreetMap on your documentation.
 from docutils import nodes
 from docutils.parsers.rst import directives
 from sphinx.util.compat import Directive
-import shlex
-
+import csv
 
 class OpenStreetMapRenderer(object):
     pass
@@ -150,54 +149,38 @@ class OpenStreetMapDirective(Directive):
     def parse_location_context(self, state):
         index = state['index']
         items = state['items']
-        lat = latitude = None
-        lng = longitude = None
-        if index + 1 < len(items):
-            if self.is_latitude_x_longitude(items[index + 1]):
-                lat, lng = items[index + 1].split("x")
-                index = index + 1
-            else:
-                if items[index + 1].endswith(","):
-                    lat = items[index + 1][0:-1]
-                    lng = items[index + 2]
-                    index = index + 2
-                    if state['key_is_even']:
-                        state['key_is_even'] = False
-                    else:
-                        state['key_is_even'] = True
-                else:
-                    lat, lng = items[index + 1].split(",")
-                    index = index + 1
-            latitude = self.parse_latlng(lat)
-            longitude = self.parse_latlng(lng)
+        lat = None
+        lng = None
+        if self.is_latitude_x_longitude(items[index]):
+            loc, value = items[index].split(":")
+            lat,lng = value.split("x")
         else:
-            raise ValueError("location value is invalid: %s" % items[index + 1])
-        state['index'] = index
+            lat = items[index].split(":")[1]
+            lng = items[index + 1]
+            state['index'] = index + 1
+        latitude = self.parse_latlng(lat)
+        longitude = self.parse_latlng(lng)
         return [latitude, longitude]
 
     def parse_rectangle_context(self, state):
         index = state['index']
         items = state['items']
-        top_left_lat = None
-        top_left_lng = None
-        bottom_right_lat = None
-        bottom_right_lng = None
-        top_right_lat = None
-        top_right_lng = None
-        bottom_left_lat = None
-        bottom_left_lng = None
-        if index + 1 < len(items):
-            lat1, lng1, lat2, lng2 = items[index + 1].split(",")
-            top_left_lat = self.parse_latlng(lat1)
-            top_left_lng = self.parse_latlng(lng1)
-            bottom_right_lat = self.parse_latlng(lat2)
-            bottom_right_lng = self.parse_latlng(lng2)
-            top_right_lat = top_left_lat
-            top_right_lng = bottom_right_lng
-            bottom_left_lat = bottom_right_lat
-            bottom_left_lng = top_left_lng
 
-        state['index'] = index + 1
+        lat1 = items[index].split(":")[1]
+        lng1 = items[index + 1]
+        lat2 = items[index + 2]
+        lng2 = items[index + 3]
+
+        top_left_lat = self.parse_latlng(lat1)
+        top_left_lng = self.parse_latlng(lng1)
+        bottom_right_lat = self.parse_latlng(lat2)
+        bottom_right_lng = self.parse_latlng(lng2)
+        top_right_lat = top_left_lat
+        top_right_lng = bottom_right_lng
+        bottom_left_lat = bottom_right_lat
+        bottom_left_lng = top_left_lng
+
+        state['index'] = index + 3
         return [[top_left_lat, top_left_lng],
                 [top_right_lat, top_right_lng],
                 [bottom_right_lat, bottom_right_lng],
@@ -209,22 +192,23 @@ class OpenStreetMapDirective(Directive):
         index = 0
         key = ""
         value = ""
-        items = shlex.split(line)
         state = {
             'key_is_even': True,
             'index': 0,
-            'items': items
         }
+        for row in csv.reader([line], delimiter=","):
+            items = row
+            state['items'] = row
         while state['index'] < len(items):
             index = state['index']
             item = items[index]
             if self.__is_key_index(state, index):
                 if self.__is_label_text(item, index):
-                    hash["label"] = item
+                    hash["label"] = item.decode("utf-8")
                     state['key_is_even'] = False
-                elif item == "location:":
+                elif item.find("location:") > 0:
                     hash["location"] = self.parse_location_context(state)
-                elif item == "rectangle:":
+                elif item.find("rectangle:") > 0:
                     hash["rectangle"] = self.parse_rectangle_context(state)
                 else:
                     key = item[0:-1]
@@ -312,7 +296,7 @@ class OpenStreetMapDirective(Directive):
         points = []
         rectangles = []
         for line in self.content:
-            point = self.__convert_to_hash(line)
+            point = self.__convert_to_hash(line.encode("utf-8"))
             if 'rectangle' in point.keys():
                 rectangles.append(point)
             else:
