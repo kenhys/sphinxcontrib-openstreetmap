@@ -221,8 +221,7 @@ class OpenStreetMapDirective(Directive):
                 return [document.reporter.error(msg, line=self.lineno)]
         else:
             msg = ("location isn't specified for openstreetmap directive")
-            return [document.reporter.warning(msg, line=self.lineno)]
-
+            return [document.reporter.error(msg, line=self.lineno)]
         return [node]
 
 
