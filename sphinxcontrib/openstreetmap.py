@@ -113,9 +113,9 @@ class OpenStreetMapDirective(Directive):
     def __milliseconds_to_degree(self, value):
         return value / 3600000.0
 
-    def __is_key_index(self, index):
+    def __is_key_index(self, state, index):
         mod = 0
-        if self.key_is_even:
+        if state['key_is_even']:
             mod = 0
         else:
             mod = 1
@@ -133,44 +133,54 @@ class OpenStreetMapDirective(Directive):
         else:
             return True
 
+    def parse_location_context(self, state):
+        index = state['index']
+        items = state['items']
+        lat = latitude = None
+        lng = longitude = None
+        if index + 1 < len(items):
+            if self.is_latitude_x_longitude(items[index + 1]):
+                lat, lng = items[index + 1].split("x")
+                index = index + 1
+            else:
+                if items[index + 1].endswith(","):
+                    lat = items[index + 1][0:-1]
+                    lng = items[index + 2]
+                    index = index + 2
+                    if state['key_is_even']:
+                        state['key_is_even'] = False
+                    else:
+                        state['key_is_even'] = True
+                else:
+                    lat, lng = items[index + 1].split(",")
+                    index = index + 1
+            latitude = self.parse_latlng(lat)
+            longitude = self.parse_latlng(lng)
+        else:
+            raise ValueError("location value is invalid: %s" % items[index + 1])
+        state['index'] = index
+        return [latitude, longitude]
+
     def __convert_to_hash(self, line):
         hash = {}
         index = 0
         key = ""
         value = ""
-        self.key_is_even = True
         items = shlex.split(line)
-        while index < len(items):
+        state = {
+            'key_is_even': True,
+            'index': 0,
+            'items': items
+        }
+        while state['index'] < len(items):
+            index = state['index']
             item = items[index]
-            if self.__is_key_index(index):
+            if self.__is_key_index(state, index):
                 if self.__is_label_text(item, index):
                     hash["label"] = item
-                    self.key_is_even = False
+                    state['key_is_even'] = False
                 elif item == "location:":
-                    if index + 1 < len(items):
-                        lat = latitude = None
-                        lng = longitude = None
-                        if self.is_latitude_x_longitude(items[index + 1]):
-                            lat, lng = items[index + 1].split("x")
-                            index = index + 2
-                        else:
-                            if items[index + 1].endswith(","):
-                                lat = items[index + 1][0:-1]
-                                lng = items[index + 2]
-                                index = index + 3
-                                if self.key_is_even:
-                                    self.key_is_even = False
-                                else:
-                                    self.key_is_even = True
-                            else:
-                                lat, lng = items[index + 1].split(",")
-                                index = index + 2
-                        latitude = self.parse_latlng(lat)
-                        longitude = self.parse_latlng(lng)
-                        hash["location"] = [latitude, longitude]
-                        continue
-                    else:
-                        raise ValueError("location value is invalid: %s" % items[index + 1])
+                    hash["location"] = self.parse_location_context(state)
                 else:
                     key = item[0:-1]
             else:
@@ -179,7 +189,7 @@ class OpenStreetMapDirective(Directive):
                 else:
                     value = item
                 hash[key] = value
-            index = index + 1
+            state['index'] = state['index'] + 1
         return hash
 
     def is_milliseconds(self, value):
