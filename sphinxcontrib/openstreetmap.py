@@ -161,6 +161,34 @@ class OpenStreetMapDirective(Directive):
         state['index'] = index
         return [latitude, longitude]
 
+    def parse_rectangle_context(self, state):
+        index = state['index']
+        items = state['items']
+        top_left_lat = None
+        top_left_lng = None
+        bottom_right_lat = None
+        bottom_right_lng = None
+        top_right_lat = None
+        top_right_lng = None
+        bottom_left_lat = None
+        bottom_left_lng = None
+        if index + 1 < len(items):
+            lat1, lng1, lat2, lng2 = items[index + 1].split(",")
+            top_left_lat = self.parse_latlng(lat1)
+            top_left_lng = self.parse_latlng(lng1)
+            bottom_right_lat = self.parse_latlng(lat2)
+            bottom_right_lng = self.parse_latlng(lng2)
+            top_right_lat = top_left_lat
+            top_right_lng = bottom_right_lng
+            bottom_left_lat = bottom_right_lat
+            bottom_left_lng = top_left_lng
+
+        return [[top_left_lat, top_left_lng],
+                [top_right_lat, top_right_lng],
+                [bottom_right_lat, bottom_right_lng],
+                [bottom_left_lat, bottom_left_lng],
+                [top_left_lat, top_left_lng]]
+
     def __convert_to_hash(self, line):
         hash = {}
         index = 0
@@ -181,6 +209,8 @@ class OpenStreetMapDirective(Directive):
                     state['key_is_even'] = False
                 elif item == "location:":
                     hash["location"] = self.parse_location_context(state)
+                elif item == "rectangle:":
+                    hash["rectangle"] = self.parse_rectangle_context(state)
                 else:
                     key = item[0:-1]
             else:
@@ -265,10 +295,15 @@ class OpenStreetMapDirective(Directive):
             node['zoom'] = 15
 
         points = []
+        rectangles = []
         for line in self.content:
             point = self.__convert_to_hash(line)
-            points.append(point)
+            if "rectangle" in point:
+                rectangles.append(point)
+            else:
+                points.append(point)
         node['marker'] = points
+        node['rectangle'] = rectangles
 
         node['location'] = [None,None]
         if 'location' in self.options:
