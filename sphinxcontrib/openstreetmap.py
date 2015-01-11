@@ -46,6 +46,7 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         label = node['label']
         longitude = node['view']['longitude']
         latitude = node['view']['latitude']
+        zoom = node['zoom']
 
         params = {
             "map_id": map_id,
@@ -53,7 +54,7 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
             "height": "400px",
             "latitude": latitude,
             "longitude": longitude,
-            "zoom": 15,
+            "zoom": zoom,
             "osm_link": "<a href='http://openstreetmap.org'>OpenStreetMap</a>"
         }
         body = ""
@@ -104,6 +105,7 @@ class OpenStreetMapDirective(Directive):
         'renderer': directives.unchanged,
         'latitude': directives.unchanged,
         'longitude': directives.unchanged,
+        'zoom': directives.unchanged,
     }
 
     def __milliseconds_to_degree(self, value):
@@ -162,6 +164,11 @@ class OpenStreetMapDirective(Directive):
                 return [document.reporter.warning(msg, line=self.lineno)]
         else:
             node['renderer'] = 'leafletjs'
+
+        if 'zoom' in self.options:
+            node['zoom'] = eval(self.options['zoom'])
+        else:
+            node['zoom'] = 15
 
         points = []
         for line in self.content:
