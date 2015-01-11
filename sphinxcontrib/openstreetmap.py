@@ -45,8 +45,8 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
     def render(self, node):
         map_id = node['id']
         label = node['label']
-        longitude = node['view']['longitude']
-        latitude = node['view']['latitude']
+        longitude = node['location'][1]
+        latitude = node['location'][0]
         zoom = node['zoom']
 
         params = {
@@ -164,6 +164,11 @@ class OpenStreetMapDirective(Directive):
             index = index + 1
         return hash
 
+    def parse_location(self, location):
+        latitude = None
+        longitude = None
+        return [latitude,longitude]
+
     def is_valid_renderer(self, renderer):
         if renderer in ['leafletjs']:
             return True
@@ -207,7 +212,7 @@ class OpenStreetMapDirective(Directive):
         node['marker'] = points
 
         if 'location' in self.options:
-            node['location'] = self.options['location']
+            node['location'] = self.parse_location(self.options['location'])
         else:
             msg = ("location isn't specified for openstreetmap directive")
             return [document.reporter.warning(msg, line=self.lineno)]
