@@ -172,6 +172,7 @@ class OpenStreetMapDirective(Directive):
 
     def run(self):
         node = openstreetmap()
+        document = self.state.document
         if 'id' in self.options:
             node['id'] = self.options['id']
         else:
