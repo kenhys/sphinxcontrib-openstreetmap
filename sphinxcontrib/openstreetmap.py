@@ -166,8 +166,8 @@ class OpenStreetMapDirective(Directive):
                                     self.key_is_even = True
                             else:
                                 lat, lng = items[index + 1].split(",")
-                                latitude = eval(lat)
-                                longitude = eval(lng)
+                                latitude = self.parse_latlng(lat)
+                                longitude = self.parse_latlng(lng)
                                 index = index + 2
                         hash["location"] = [latitude, longitude]
                         continue
