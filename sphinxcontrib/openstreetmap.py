@@ -187,7 +187,6 @@ class OpenStreetMapDirective(Directive):
                 else:
                     hash[key] = value
             index = index + 1
-        print(hash)
         return hash
 
     def is_milliseconds(self, value):
