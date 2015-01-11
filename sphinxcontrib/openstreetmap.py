@@ -45,8 +45,8 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
     def render(self, node):
         map_id = node['id']
         label = node['label']
-        longitude = node['location'][1]
         latitude = node['location'][0]
+        longitude = node['location'][1]
         zoom = node['zoom']
 
         params = {
