@@ -43,7 +43,6 @@ Here is the syntax of openstreetmap::
        :id: UNIQUEUE_ID_FOR_DIV_TAG
        :latitude: LATITUDE
        :longitude: LONGITUDE
-       :renderer: leafletjs
 
        MARKER_1_LATITUDE_AND_LONGITUDE
        ...
@@ -67,11 +66,6 @@ Specify the latitude of center point in OpenStreetMap.
 
 Specify the longitude of center point in OpenStreetMap.
 
-`renderer`
-``````````
-
-Specify the renderer. Currently `reafletjs` is supported.
-
 Optional parameters
 ~~~~~~~~~~~~~~~~~~~
 
@@ -79,6 +73,11 @@ Optional parameters
 ```````````````
 
 Specify the label for OpenStreetMap data. This label is shown in right bottom of OpenStreetMap.
+
+`renderer`
+``````````
+
+Specify the renderer. Currently `reafletjs` is supported.
 
 `MARKER_X_LATITUDE_AND_LONGITUDE`
 `````````````````````````````````
