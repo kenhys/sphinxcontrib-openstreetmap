@@ -7,6 +7,21 @@
 
 .. include:: ../NEWS
 
+Examples
+========
+
+Here are some examples how to use ``openstreetmap`` directive.
+
+.. list-table:: ``openstreetmap`` directive examples
+   :header-rows: 1
+
+   * - Example
+     - Description
+   * - `No marker <examples/no_marker.html>`_
+     - It just shows simple map only.
+   * - `Multiple markers <examples/multiple_markers.html>`_
+     - It shows multiple markers on map.
+
 License
 =======
 
