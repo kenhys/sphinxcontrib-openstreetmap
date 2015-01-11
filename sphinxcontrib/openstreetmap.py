@@ -42,6 +42,16 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         """ % {"cdn": cdn_url}
         return body
 
+    def generate_rectangle_script(self, map_id, data):
+        body = "L.multiPolygon(["
+        for rect in data:
+            body += "["
+            for pair in rect['rectangle']:
+                body += "[%s, %s]," % (pair[0], pair[1])
+            body += "]"
+        body += "]).bindLabel('dummy').addTo(%s);" % map_id
+        return body
+
     def render(self, node):
         map_id = node['id']
         label = node['label']
@@ -88,6 +98,7 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
           L.marker(latlng).bindLabel(label, {noHide: true}).addTo(%s);
         }
         """ % map_id
+        body += self.generate_rectangle_script(map_id, node['rectangle'])
         body += "</script>"
         body += "</div>"
         return body
@@ -183,6 +194,7 @@ class OpenStreetMapDirective(Directive):
             bottom_left_lat = bottom_right_lat
             bottom_left_lng = top_left_lng
 
+        state['index'] = index + 1
         return [[top_left_lat, top_left_lng],
                 [top_right_lat, top_right_lng],
                 [bottom_right_lat, bottom_right_lng],
@@ -298,7 +310,7 @@ class OpenStreetMapDirective(Directive):
         rectangles = []
         for line in self.content:
             point = self.__convert_to_hash(line)
-            if "rectangle" in point:
+            if 'rectangle' in point.keys():
                 rectangles.append(point)
             else:
                 points.append(point)
