@@ -100,6 +100,8 @@ class OpenStreetMapDirective(Directive):
     """Directive for embedding OpenStreetMap"""
     has_content = True
     key_is_even = True
+    required_arguments = 0
+    optional_arguments = 32
     option_spec = {
         'id': directives.unchanged,
         'label': directives.unchanged,
