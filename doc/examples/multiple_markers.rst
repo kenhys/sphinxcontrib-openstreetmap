@@ -10,7 +10,7 @@ Multiple markers example
    :renderer: leafletjs
    :zoom: 14
 
-   label: "Metropolitan Museum of Art, New York, United States", latitude: 40.779437, longitude: -73.963244
-   label: "Central Park, New York, United States" latitude: 40.782865, longitude: -73.965355
+   "Metropolitan Museum of Art, New York, United States", latitude: 40.779437, longitude: -73.963244
+   "Central Park, New York, United States" latitude: 40.782865, longitude: -73.965355
  
 
