@@ -187,7 +187,7 @@ class OpenStreetMapDirective(Directive):
         lng = None
         if self.is_latitude_x_longitude(items[index]):
             loc, value = items[index].split(":")
-            lat,lng = value.split("x")
+            lat, lng = value.split("x")
         else:
             lat = items[index].split(":")[1]
             lng = items[index + 1]
@@ -227,7 +227,7 @@ class OpenStreetMapDirective(Directive):
 
         if self.is_latitude_x_longitude(items[index]):
             loc, value = items[index].split(":")
-            lat,lng = value.split("x")
+            lat, lng = value.split("x")
         else:
             lat = items[index].split(":")[1]
             lng = items[index + 1]
@@ -368,7 +368,7 @@ class OpenStreetMapDirective(Directive):
         node['rectangle'] = rectangles
         node['circle'] = circles
 
-        node['location'] = [None,None]
+        node['location'] = [None, None]
         if 'location' in self.options:
             try:
                 location = self.options['location']
