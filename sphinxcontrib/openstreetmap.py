@@ -13,6 +13,8 @@ from docutils.parsers.rst import directives
 from sphinx.util.compat import Directive
 import csv
 import math
+import os
+import urllib
 
 
 def deg2num(lat_deg, lon_deg, zoom):
@@ -79,7 +81,20 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
             """ % (latitude, longitude, radius, label, map_id)
         return body
 
-    def render(self, node):
+    def fetch_tile_images(self, prefix, latitude, longitude, zoom):
+        lat_num, lng_num = deg2num(latitude, longitude, zoom)
+        for x in range(-2, 3):
+            for y in range(-2, 3):
+                base = "http://a.tile.openstreetmap.org"
+                image_path = "%d/%d/%d.png" % (zoom, lat_num + x, lng_num + y)
+                image_url = "%s/%s" % (base, image_path)
+                path = "%s/_static/tiles/%s" % (prefix, image_path)
+                if not os.path.exists(os.path.dirname(path)):
+                    os.makedirs(os.path.dirname(path))
+                if not os.path.exists(path):
+                    urllib.urlretrieve(image_url, path)
+
+    def render(self, translator, node):
         map_id = node['id']
         label = node['label']
         latitude = node['location'][0]
@@ -106,7 +121,18 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         body += """
         <div id='%(map_id)s' style='width: 100%%; height: %(height)s;'>
         <script type='text/javascript'>
-        var osm_url = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        """ % params
+
+        prefix = ""
+        if node['offline']:
+            prefix = "../_static"
+            self.fetch_tile_images(translator.builder.outdir,
+                                   latitude, longitude, zoom)
+        else:
+            prefix = "http://{s}.tile.openstreetmap.org"
+        body += "var osm_url = '%s/{z}/{x}/{y}.png';" % prefix
+
+        body += """
         var attr = "%(label)s | Map data &copy; %(osm_link)s contributors";
         var osm = new L.TileLayer(osm_url, {attribution: attr});
         var latlng = new L.LatLng(%(latitude)s, %(longitude)s);
@@ -158,6 +184,7 @@ class OpenStreetMapDirective(Directive):
     """Directive for embedding OpenStreetMap"""
     has_content = True
     key_is_even = True
+    offline = False
     required_arguments = 0
     optional_arguments = 32
     option_spec = {
@@ -366,9 +393,11 @@ class OpenStreetMapDirective(Directive):
             node['zoomcontrol'] = "true"
 
         if 'offline' in self.options:
-            node['offline'] = self.options['offline']
-        else:
-            node['offline'] = "true"
+            if "true" == self.options['offline']:
+                self.offline = True
+            elif "false" == self.options['offline']:
+                self.offline = False
+        node['offline'] = self.offline
 
         points = []
         rectangles = []
@@ -410,7 +439,7 @@ def visit_openstreetmap_node(self, node):
         msg = ('renderer: %s is not supported.' % renderer['renderer'])
         return [document.reporter.warning(msg, line=self.lineno)]
 
-    self.body.append(renderer.render(node))
+    self.body.append(renderer.render(self, node))
 
 
 def depart_openstreetmap_node(self, node):
