@@ -48,42 +48,45 @@ Here is the syntax of openstreetmap::
 Required parameters
 ~~~~~~~~~~~~~~~~~~~
 
-`id`
-````
+``id``
+``````
 
-Specify unique id for OpenStreetMap data. This `id` is used for id of `div` tag in HTML.
+Specify unique id for map. This `id` is used for ``id`` of ``div`` tag in HTML.
 
-`location`
-``````````
+``location``
+````````````
 
-Specify the latitude and the longitude of center point in OpenStreetMap.
+Specify the latitude and the longitude of center point in map.
 
 Optional parameters
 ~~~~~~~~~~~~~~~~~~~
 
-`renderer`
-``````````
+``renderer``
+````````````
 
 The default value is ``leafletjs``.
-Specify the renderer. Currently `leafletjs` is supported.
 
-`zoomcontrol`
-`````````````
+Specify the renderer. Currently only ``leafletjs`` is supported.
+
+``zoomcontrol``
+```````````````
 
 The default value is ``true``.
+
 Specify ``false`` if you want to disable zoom feature.
 
+``offline``
+```````````
 
-`offline`
-`````````
+The default value is ``false``.
 
 Specify ``true`` if you want to generate offline map.
-Note that offline map doesn't support zoom, so disable zoom feature to set ``false`` for ``zoomcontrol``.
+Note that offline map doesn't have fully support for zoom feature, so disable zoom feature to set ``false`` for ``zoomcontrol``.
 
 `LABEL_FOR_MAP`
 ```````````````
 
-Specify the label for OpenStreetMap data. This label is shown in right bottom of OpenStreetMap.
+Specify the label for map. This label is shown in right bottom of map.
 
 `MARKER_X_LATITUDE_AND_LONGITUDE`
 `````````````````````````````````
