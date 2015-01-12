@@ -123,6 +123,14 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
                 if not os.path.exists(path):
                     urllib.urlretrieve(image_url, path)
 
+    def generate_relative_prefix(self, translator):
+        docname = translator.builder.current_name
+        prefix = ""
+        for name in docname.split("/"):
+            if name != docname:
+                prefix = "../" + prefix
+        return prefix
+
     def render(self, translator, node):
         map_id = node['id']
         label = node['label']
