@@ -55,6 +55,27 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         """ % {"cdn": cdn_url}
         return body
 
+    def generate_offline_header(self, translator):
+        prefix = self.generate_relative_prefix(translator)
+        prefix += "_static/leafletjs"
+
+        body = """
+        <link rel="stylesheet" href="%(prefix)s/leaflet.css" />
+        <!--[if lte IE 8]>
+        <link rel="stylesheet" href="%(prefix)s/leaflet.ie.css" />
+        <![endif]-->
+        <link rel="stylesheet" href="%(prefix)s/leaflet.label.css" />
+        <script src="%(prefix)s/leaflet-src.js"></script>
+        <script src="%(prefix)s/Label.js"></script>
+        <script src="%(prefix)s/BaseMarkerMethods.js"></script>
+        <script src="%(prefix)s/Marker.Label.js"></script>
+        <script src="%(prefix)s/CircleMarker.Label.js"></script>
+        <script src="%(prefix)s/Path.Label.js"></script>
+        <script src="%(prefix)s/Map.Label.js"></script>
+        <script src="%(prefix)s/FeatureGroup.Label.js"></script>
+        """ % {"prefix": prefix}
+        return body
+
     def generate_rectangle_script(self, map_id, data):
         body = "L.multiPolygon(["
         label = ""
@@ -93,6 +114,8 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
             "libs/leaflet/leaflet.ie.css",
             "dist/leaflet.label.css",
             "libs/leaflet/leaflet-src.js",
+            "libs/leaflet/images/marker-icon.png",
+            "libs/leaflet/images/marker-shadow.png",
             "src/Label.js",
             "src/BaseMarkerMethods.js",
             "src/Marker.Label.js",
@@ -104,7 +127,12 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
 
         for name in files:
             src = "%s/%s" % (cdn_url, name)
-            dest = "%s/%s" % (base, os.path.basename(name))
+            dest = ""
+            if name.endswith(".png"):
+                dest = "%s/images/%s" % (base, os.path.basename(name))
+            else:
+                dest = "%s/%s" % (base, os.path.basename(name))
+
             if not os.path.exists(os.path.dirname(dest)):
                 os.makedirs(os.path.dirname(dest))
             if not os.path.exists(dest):
@@ -154,7 +182,10 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
             params['maxZoom'] = zoom
 
         body = ""
-        body += self.__header__()
+        if node['offline']:
+            body += self.generate_offline_header(translator)
+        else:
+            body += self.__header__()
         body += """
         <div id='%(map_id)s' style='width: 100%%; height: %(height)s;'>
         <script type='text/javascript'>
