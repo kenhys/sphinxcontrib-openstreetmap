@@ -17,7 +17,7 @@ Here are some examples how to use ``openstreetmap`` directive.
 
    * - Example
      - Description
-   * - `No label <examples/no_label.html>`_
+   * - `Label <examples/label.html>`_
      - It shows usage of label.
    * - `No marker <examples/no_marker.html>`_
      - It just shows simple map only.
