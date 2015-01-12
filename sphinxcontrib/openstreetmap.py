@@ -81,6 +81,35 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
             """ % (latitude, longitude, radius, label, map_id)
         return body
 
+    def fetch_leafletjs(self, translator):
+        cdn_url = "http://cdn.rawgit.com/Leaflet/Leaflet.label/master"
+        outdir = translator.builder.outdir
+        prefix = "_static"
+
+        base = "%s/%s/leafletjs" % (outdir, prefix)
+
+        files = [
+            "libs/leaflet/leaflet.css",
+            "libs/leaflet/leaflet.ie.css",
+            "dist/leaflet.label.css",
+            "libs/leaflet/leaflet-src.js",
+            "src/Label.js",
+            "src/BaseMarkerMethods.js",
+            "src/Marker.Label.js",
+            "src/CircleMarker.Label.js",
+            "src/Path.Label.js",
+            "src/Map.Label.js",
+            "src/FeatureGroup.Label.js",
+        ]
+
+        for name in files:
+            src = "%s/%s" % (cdn_url, name)
+            dest = "%s/%s" % (base, os.path.basename(name))
+            if not os.path.exists(os.path.dirname(dest)):
+                os.makedirs(os.path.dirname(dest))
+            if not os.path.exists(dest):
+                urllib.urlretrieve(src, dest)
+
     def fetch_tile_images(self, prefix, latitude, longitude, zoom):
         lat_num, lng_num = deg2num(latitude, longitude, zoom)
         for x in range(-2, 3):
@@ -132,6 +161,7 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
                     prefix = "../" + prefix
             self.fetch_tile_images(translator.builder.outdir,
                                    latitude, longitude, zoom)
+            self.fetch_leafletjs(translator)
         else:
             prefix = "http://{s}.tile.openstreetmap.org"
         body += "var osm_url = '%s/{z}/{x}/{y}.png';" % prefix
