@@ -432,7 +432,7 @@ class OpenStreetMapDirective(Directive):
 
 def visit_openstreetmap_node(self, node):
     renderer = None
-    document = self.state.document
+    document = self.document
     if node['renderer'] == "leafletjs":
         renderer = OpenStreetMapLeafletjsRenderer()
     else:
