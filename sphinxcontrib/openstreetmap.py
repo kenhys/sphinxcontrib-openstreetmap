@@ -118,9 +118,11 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
 
         body += "var markers = ["
         for marker in markers:
+            latitude = marker['location'][0]
+            longitude = marker['location'][1]
             body += """
             {label: "%s", latitude: %s, longitude: %s},
-            """ % (marker['label'], marker['location'][0], marker['location'][1])
+            """ % (marker['label'], latitude, longitude)
         body += "];"
         body += """
         for (var i = 0; i < markers.length; i++) {
