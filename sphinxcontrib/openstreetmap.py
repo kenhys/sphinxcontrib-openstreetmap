@@ -124,7 +124,7 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
                     urllib.urlretrieve(image_url, path)
 
     def generate_relative_prefix(self, translator):
-        docname = translator.builder.current_name
+        docname = translator.builder.current_docname
         prefix = ""
         for name in docname.split("/"):
             if name != docname:
