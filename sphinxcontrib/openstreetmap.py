@@ -329,7 +329,7 @@ class OpenStreetMapDirective(Directive):
             document.reporter.warning(msg, line=self.lineno)
             node['label'] = "Example"
         else:
-            node['label'] = "".join(self.arguments)
+            node['label'] = " ".join(self.arguments)
 
         if 'renderer' in self.options:
             if self.is_valid_renderer(self.options['renderer']):
