@@ -61,15 +61,29 @@ Specify the latitude and the longitude of center point in OpenStreetMap.
 Optional parameters
 ~~~~~~~~~~~~~~~~~~~
 
+`renderer`
+``````````
+
+The default value is ``leafletjs``.
+Specify the renderer. Currently `leafletjs` is supported.
+
+`zoomcontrol`
+`````````````
+
+The default value is ``true``.
+Specify ``false`` if you want to disable zoom feature.
+
+
+`offline`
+`````````
+
+Specify ``true`` if you want to generate offline map.
+Note that offline map doesn't support zoom, so disable zoom feature to set ``false`` for ``zoomcontrol``.
+
 `LABEL_FOR_MAP`
 ```````````````
 
 Specify the label for OpenStreetMap data. This label is shown in right bottom of OpenStreetMap.
-
-`renderer`
-``````````
-
-Specify the renderer. Currently `reafletjs` is supported.
 
 `MARKER_X_LATITUDE_AND_LONGITUDE`
 `````````````````````````````````
