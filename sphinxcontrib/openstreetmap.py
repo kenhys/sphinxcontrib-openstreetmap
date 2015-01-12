@@ -154,11 +154,8 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
 
         prefix = ""
         if node['offline']:
-            prefix = "_static/tiles"
-            docname = translator.builder.current_docname
-            for name in docname.split("/"):
-                if name != docname:
-                    prefix = "../" + prefix
+            prepend = self.generate_relative_prefix(translator)
+            prefix = prepend + "_static/tiles"
             self.fetch_tile_images(translator.builder.outdir,
                                    latitude, longitude, zoom)
             self.fetch_leafletjs(translator)
