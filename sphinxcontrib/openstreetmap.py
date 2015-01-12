@@ -155,6 +155,7 @@ class OpenStreetMapDirective(Directive):
         'location': directives.unchanged,
         'zoom': directives.unchanged,
         'zoomcontrol': directives.unchanged,
+        'offline': directives.unchanged,
     }
 
     def __milliseconds_to_degree(self, value):
@@ -352,6 +353,11 @@ class OpenStreetMapDirective(Directive):
             node['zoomcontrol'] = self.options['zoomcontrol']
         else:
             node['zoomcontrol'] = "true"
+
+        if 'offline' in self.options:
+            node['offline'] = self.options['offline']
+        else:
+            node['offline'] = "true"
 
         points = []
         rectangles = []
