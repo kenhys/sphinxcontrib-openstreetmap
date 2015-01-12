@@ -154,8 +154,8 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
     def generate_relative_prefix(self, translator):
         docname = translator.builder.current_docname
         prefix = ""
-        for name in docname.split("/"):
-            if name != docname:
+        for nest in range(0, len(docname.split("/"))):
+            if nest > 0:
                 prefix = "../" + prefix
         return prefix
 
