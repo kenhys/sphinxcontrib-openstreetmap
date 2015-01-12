@@ -371,7 +371,8 @@ class OpenStreetMapDirective(Directive):
         node['location'] = [None,None]
         if 'location' in self.options:
             try:
-                node['location'] = self.parse_location(self.options['location'])
+                location = self.options['location']
+                node['location'] = self.parse_location(location)
             except ValueError:
                 msg = ('location value is invalid: %s'
                        'Use LATITUDE,LONGITUDE or LATITUDExLONGITUDE format'
