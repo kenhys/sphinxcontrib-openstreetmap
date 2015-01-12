@@ -73,6 +73,7 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         latitude = node['location'][0]
         longitude = node['location'][1]
         zoom = node['zoom']
+        zoomcontrol = node['zoomcontrol']
 
         params = {
             "map_id": map_id,
@@ -81,8 +82,13 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
             "latitude": latitude,
             "longitude": longitude,
             "zoom": zoom,
+            "zoomControl": zoomcontrol,
             "osm_link": "<a href='http://openstreetmap.org'>OpenStreetMap</a>"
         }
+        if zoomcontrol == "false":
+            params['minZoom'] = zoom
+            params['maxZoom'] = zoom
+
         body = ""
         body += self.__header__()
         body += """
@@ -92,11 +98,21 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         var attr = "%(label)s | Map data &copy; %(osm_link)s contributors";
         var osm = new L.TileLayer(osm_url, {attribution: attr});
         var latlng = new L.LatLng(%(latitude)s, %(longitude)s);
-        var %(map_id)s = new L.Map('%(map_id)s',
-                                   {layers: [osm],
-                                    center: latlng,
-                                    zoom: %(zoom)d});
+        var %(map_id)s = new L.Map('%(map_id)s', {""" % params
+
+        body += """
+        layers: [osm],
+        center: latlng,
+        zoom: %(zoom)d,
+        zoomControl: %(zoomControl)s,
         """ % params
+        if zoomcontrol == "false":
+            body += """
+            minZoom: %(minZoom)d,
+            maxZoom: %(maxZoom)d,
+            """ % params
+        body += "});"
+
         markers = node['marker']
 
         body += "var markers = ["
@@ -135,6 +151,7 @@ class OpenStreetMapDirective(Directive):
         'renderer': directives.unchanged,
         'location': directives.unchanged,
         'zoom': directives.unchanged,
+        'zoomcontrol': directives.unchanged,
     }
 
     def __milliseconds_to_degree(self, value):
@@ -327,6 +344,11 @@ class OpenStreetMapDirective(Directive):
             node['zoom'] = eval(self.options['zoom'])
         else:
             node['zoom'] = 15
+
+        if 'zoomcontrol' in self.options:
+            node['zoomcontrol'] = self.options['zoomcontrol']
+        else:
+            node['zoomcontrol'] = "true"
 
         points = []
         rectangles = []
