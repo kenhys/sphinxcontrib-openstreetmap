@@ -1,6 +1,12 @@
 NEWS
 ====
 
+0.3.0 (2015-01-XX)
+------------------
+
+* Support ``circle:`` in context.
+* Support to disable zoom control.
+
 0.2.0 (2015-01-12)
 ------------------
 
