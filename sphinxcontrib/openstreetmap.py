@@ -336,7 +336,7 @@ class OpenStreetMapDirective(Directive):
             if self.is_valid_renderer(self.options['renderer']):
                 node['renderer'] = self.options['renderer']
             else:
-                msg = ('renderer: %s is not valid.' % renderer['renderer'])
+                msg = ('renderer: %s is not valid.' % self.options['renderer'])
                 return [document.reporter.warning(msg, line=self.lineno)]
         else:
             node['renderer'] = 'leafletjs'
