@@ -14,8 +14,8 @@ NEWS
 * Support ``zoom`` option.
 * Add examples.
 * Support to omit ``label:`` in context.
-* Drop :label: option. This is incompatible change. Specify label as arguments.
-* Drop latitude:,longitude:. Use location: in context instead.
+* Drop ``:label:`` option. This is incompatible change. Specify label as arguments.
+* Drop ``latitude:,longitude:``. Use location: in context instead.
 * Support milliseconds expression in ``location:``.
 * Support ``rectangle:`` in context.
 
