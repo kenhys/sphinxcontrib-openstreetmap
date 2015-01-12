@@ -54,6 +54,19 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         ]).bindLabel("%s").addTo(%s);""" % (label, map_id)
         return body
 
+    def generate_circle_script(self, map_id, data):
+        body = ""
+        for circle in data:
+            label = circle['label']
+            items = circle['circle']
+            latitude = items['latitude']
+            longitude = items['longitude']
+            radius = items['radius']
+            body += """
+            L.circle([%s, %s], %d).bindLabel("%s").addTo(%s);
+            """ % (latitude, longitude, radius, label, map_id)
+        return body
+
     def render(self, node):
         map_id = node['id']
         label = node['label']
@@ -101,6 +114,7 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         }
         """ % map_id
         body += self.generate_rectangle_script(map_id, node['rectangle'])
+        body += self.generate_circle_script(map_id, node['circle'])
         body += "</script>"
         body += "</div>"
         return body
@@ -187,6 +201,25 @@ class OpenStreetMapDirective(Directive):
                 [bottom_left_lat, bottom_left_lng],
                 [top_left_lat, top_left_lng]]
 
+    def parse_circle_context(self, state):
+        index = state['index']
+        items = state['items']
+
+        if self.is_latitude_x_longitude(items[index]):
+            loc, value = items[index].split(":")
+            lat,lng = value.split("x")
+        else:
+            lat = items[index].split(":")[1]
+            lng = items[index + 1]
+            state['index'] = index + 1
+        latitude = self.parse_latlng(lat)
+        longitude = self.parse_latlng(lng)
+        radius = 500
+
+        return {'latitude': latitude,
+                'longitude': longitude,
+                'radius': radius}
+
     def __convert_to_hash(self, line):
         hash = {}
         index = 0
@@ -210,6 +243,8 @@ class OpenStreetMapDirective(Directive):
                     hash["location"] = self.parse_location_context(state)
                 elif item.find("rectangle:") > 0:
                     hash["rectangle"] = self.parse_rectangle_context(state)
+                elif item.find("circle:") > 0:
+                    hash["circle"] = self.parse_circle_context(state)
                 else:
                     key = item[0:-1]
             else:
@@ -295,14 +330,18 @@ class OpenStreetMapDirective(Directive):
 
         points = []
         rectangles = []
+        circles = []
         for line in self.content:
             point = self.__convert_to_hash(line.encode("utf-8"))
             if 'rectangle' in point.keys():
                 rectangles.append(point)
+            elif 'circle' in point.keys():
+                circles.append(point)
             else:
                 points.append(point)
         node['marker'] = points
         node['rectangle'] = rectangles
+        node['circle'] = circles
 
         node['location'] = [None,None]
         if 'location' in self.options:
