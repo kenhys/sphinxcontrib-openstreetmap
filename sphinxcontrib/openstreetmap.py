@@ -148,7 +148,7 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
                 if not os.path.exists(os.path.dirname(path)):
                     os.makedirs(os.path.dirname(path))
                 if not os.path.exists(path):
-                    msg = "Retrieve from %s" % src
+                    msg = "Retrieve from %s" % image_url
                     translator.builder.info(msg)
                     urlretrieve(image_url, path)
                     time.sleep(0.5)
