@@ -42,9 +42,6 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
 
         body = """
         <link rel="stylesheet" href="%(cdn)s/libs/leaflet/leaflet.css" />
-        <!--[if lte IE 8]>
-        <link rel="stylesheet" href="%(cdn)s/libs/leaflet/leaflet.ie.css" />
-        <![endif]-->
         <link rel="stylesheet" href="%(cdn)s/dist/leaflet.label.css" />
         <script src="%(cdn)s/libs/leaflet/leaflet-src.js"></script>
         <script src="%(cdn)s/src/Label.js"></script>
@@ -63,9 +60,6 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
 
         body = """
         <link rel="stylesheet" href="%(prefix)s/leaflet.css" />
-        <!--[if lte IE 8]>
-        <link rel="stylesheet" href="%(prefix)s/leaflet.ie.css" />
-        <![endif]-->
         <link rel="stylesheet" href="%(prefix)s/leaflet.label.css" />
         <script src="%(prefix)s/leaflet-src.js"></script>
         <script src="%(prefix)s/Label.js"></script>
@@ -113,7 +107,6 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
 
         files = [
             "libs/leaflet/leaflet.css",
-            "libs/leaflet/leaflet.ie.css",
             "dist/leaflet.label.css",
             "libs/leaflet/leaflet-src.js",
             "libs/leaflet/images/marker-icon.png",
