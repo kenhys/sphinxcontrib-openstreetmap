@@ -68,6 +68,15 @@ The default value is ``leafletjs``.
 
 Specify the renderer. Currently only ``leafletjs`` is supported.
 
+``zoom``
+````````
+
+The default value is 15.
+
+Specify the value of zoom level.
+The value of zoom level must be in 0 to 19.
+See [Zoom levels](http://wiki.openstreetmap.org/wiki/Zoom_levels).
+
 ``zoomcontrol``
 ```````````````
 
