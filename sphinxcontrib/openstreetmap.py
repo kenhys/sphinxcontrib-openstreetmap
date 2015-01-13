@@ -143,7 +143,8 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
                 urlretrieve(src, dest)
                 time.sleep(1.0)
 
-    def fetch_tile_images(self, prefix, latitude, longitude, zoom):
+    def fetch_tile_images(self, translator, latitude, longitude, zoom):
+        prefix = translator.builder.outdir
         lat_num, lng_num = deg2num(latitude, longitude, zoom)
         for x in range(-2, 3):
             for y in range(-2, 3):
@@ -203,7 +204,7 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
         if node['offline']:
             prepend = self.generate_relative_prefix(translator)
             prefix = prepend + "_static/tiles"
-            self.fetch_tile_images(translator.builder.outdir,
+            self.fetch_tile_images(translator,
                                    latitude, longitude, zoom)
             self.fetch_leafletjs(translator)
         else:
