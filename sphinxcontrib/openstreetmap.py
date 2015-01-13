@@ -137,7 +137,7 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
             if not os.path.exists(os.path.dirname(dest)):
                 os.makedirs(os.path.dirname(dest))
             if not os.path.exists(dest):
-                urllib.urlretrieve(src, dest)
+                urlretrieve(src, dest)
 
     def fetch_tile_images(self, prefix, latitude, longitude, zoom):
         lat_num, lng_num = deg2num(latitude, longitude, zoom)
@@ -150,7 +150,7 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
                 if not os.path.exists(os.path.dirname(path)):
                     os.makedirs(os.path.dirname(path))
                 if not os.path.exists(path):
-                    urllib.urlretrieve(image_url, path)
+                    urlretrieve(image_url, path)
 
     def generate_relative_prefix(self, translator):
         docname = translator.builder.current_docname
