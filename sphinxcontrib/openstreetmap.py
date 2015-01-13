@@ -158,7 +158,7 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
                     msg = "Retrieve from %s" % src
                     translator.builder.info(msg)
                     urlretrieve(image_url, path)
-                    time.sleep(1.0)
+                    time.sleep(0.5)
 
     def generate_relative_prefix(self, translator):
         docname = translator.builder.current_docname
