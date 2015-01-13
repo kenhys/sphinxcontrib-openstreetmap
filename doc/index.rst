@@ -35,7 +35,7 @@ Here are some examples how to use ``openstreetmap`` directive.
      - It shows usage of ``circle:``.
    * - `Offline <examples/offline.html>`_
      - It shows map on offline.
-   * - `Taiyaki <examples/taiyaki_in_rectangle.html>`_
+   * - `Taiyaki <examples/taiyaki.html>`_
      - It shows Taiyaki shops.
 
 License
