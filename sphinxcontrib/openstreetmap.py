@@ -11,10 +11,11 @@ Embed OpenStreetMap on your documentation.
 from docutils import nodes
 from docutils.parsers.rst import directives
 from sphinx.util.compat import Directive
+import six
+from six.moves.urllib.request import urlretrieve
 import csv
 import math
 import os
-import urllib
 
 
 def deg2num(lat_deg, lon_deg, zoom):
