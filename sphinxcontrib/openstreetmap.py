@@ -16,6 +16,7 @@ from six.moves.urllib.request import urlretrieve
 import csv
 import math
 import os
+import time
 
 
 def deg2num(lat_deg, lon_deg, zoom):
@@ -137,7 +138,10 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
             if not os.path.exists(os.path.dirname(dest)):
                 os.makedirs(os.path.dirname(dest))
             if not os.path.exists(dest):
+                msg = "Retrieve from %s" % src
+                translator.builder.info(msg)
                 urlretrieve(src, dest)
+                time.sleep(1.0)
 
     def fetch_tile_images(self, prefix, latitude, longitude, zoom):
         lat_num, lng_num = deg2num(latitude, longitude, zoom)
@@ -150,7 +154,10 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
                 if not os.path.exists(os.path.dirname(path)):
                     os.makedirs(os.path.dirname(path))
                 if not os.path.exists(path):
+                    msg = "Retrieve from %s" % src
+                    translator.builder.info(msg)
                     urlretrieve(image_url, path)
+                    time.sleep(1.0)
 
     def generate_relative_prefix(self, translator):
         docname = translator.builder.current_docname
