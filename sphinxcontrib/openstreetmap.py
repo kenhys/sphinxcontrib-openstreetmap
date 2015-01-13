@@ -367,7 +367,10 @@ class OpenStreetMapDirective(Directive):
             item = items[index]
             if self.__is_key_index(state, index):
                 if self.__is_label_text(item, index):
-                    hash["label"] = item.decode("utf-8")
+                    if six.PY3:
+                        hash["label"] = item
+                    elif six.PY2:
+                        hash["label"] = item.decode("utf-8")
                     state['key_is_even'] = False
                 elif item.find("location:") > 0:
                     hash["location"] = self.parse_location_context(state)
@@ -474,7 +477,10 @@ class OpenStreetMapDirective(Directive):
         rectangles = []
         circles = []
         for line in self.content:
-            point = self.__convert_to_hash(line.encode("utf-8"))
+            if six.PY3:
+                point = self.__convert_to_hash(line)
+            elif six.PY2:
+                point = self.__convert_to_hash(line.encode("utf-8"))
             if 'rectangle' in point.keys():
                 rectangles.append(point)
             elif 'circle' in point.keys():
