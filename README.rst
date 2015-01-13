@@ -75,7 +75,7 @@ The default value is 15.
 
 Specify the value of zoom level.
 The value of zoom level must be in 0 to 19.
-See [Zoom levels](http://wiki.openstreetmap.org/wiki/Zoom_levels).
+See `Zoom levels <http://wiki.openstreetmap.org/wiki/Zoom_levels>`_.
 
 ``zoomcontrol``
 ```````````````
