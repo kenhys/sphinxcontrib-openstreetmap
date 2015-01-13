@@ -139,9 +139,12 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
     def fetch_tile_images(self, translator, latitude, longitude, zoom):
         prefix = translator.builder.outdir
         lat_num, lng_num = deg2num(latitude, longitude, zoom)
+        n = 0
+        subdomains = ["a", "b", "c"]
         for x in range(-2, 3):
             for y in range(-2, 3):
-                base = "http://a.tile.openstreetmap.org"
+                subdomain = subdomains[n % 3]
+                base = "http://%s.tile.openstreetmap.org" % subdomain
                 image_path = "%d/%d/%d.png" % (zoom, lat_num + x, lng_num + y)
                 image_url = "%s/%s" % (base, image_path)
                 path = "%s/_static/tiles/%s" % (prefix, image_path)
@@ -151,7 +154,8 @@ class OpenStreetMapLeafletjsRenderer(OpenStreetMapRenderer):
                     msg = "Retrieve from %s" % image_url
                     translator.builder.info(msg)
                     urlretrieve(image_url, path)
-                    time.sleep(0.5)
+                    time.sleep(0.1)
+                n = n + 1
 
     def generate_relative_prefix(self, translator):
         docname = translator.builder.current_docname
