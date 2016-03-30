@@ -1,2 +1,3 @@
 _build
 *.pyc
+sphinxcontrib_openstreetmap.egg-info
